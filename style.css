@@ -1,13 +1,14 @@
 :root {
-    --brown: #6A4A35;
-    --brown-d: #4E3526;
+    --brown: #6A4435;
+    --brown-d: #6A4435;
     --olive: #5D6B3F;
     --beige: #E8DDCB;
-    --paper: #F3ECDF;
+    --paper: #E8DDCB;
     --red: #A52A2A;
-    --ink: #3B2A1E;
-    --line: rgba(106, 74, 53, .22);
-    --pat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 6l6 16 16 6-16 6-6 16-6-16-16-6 16-6z' fill='none' stroke='%23E8DDCB' stroke-opacity='.08' stroke-width='1.2'/%3E%3C/svg%3E")
+    --ink: #6A4435;
+    --line: rgba(106, 68, 53, .22);
+
+    --pat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 6l6 16 16 6-16 6-6 16-6-16-16-6 16-6z' fill='none' stroke='%23E8DDCB' stroke-opacity='.04' stroke-width='1.2'/%3E%3C/svg%3E");
 }
 
 * {
@@ -42,12 +43,23 @@ button:focus-visible {
 
 /* hero */
 .hero {
-    background: var(--brown) var(--pat);
+    background: var(--olive) var(--pat);
     color: var(--beige);
     text-align: center;
-    padding: calc(26px + env(safe-area-inset-top, 0px)) 18px 54px;
+    padding: calc(22px + env(safe-area-inset-top, 0px)) 18px 42px;
     position: relative;
-    overflow: hidden
+    overflow: hidden;
+}
+
+.brand-logo {
+    display: block;
+    width: min(284px, 80vw);
+    height: auto;
+    margin: 0 auto 6px;
+    border-radius: 999px 999px 6px 6px;
+    outline: 1px solid rgba(232, 221, 203, .35);
+    outline-offset: 4px;
+    box-shadow: 0 10px 30px rgba(106, 68, 53, .15)
 }
 
 .star {
@@ -75,7 +87,7 @@ button:focus-visible {
     border-radius: 999px 999px 18px 18px;
     outline: 1px solid rgba(232, 221, 203, .25);
     outline-offset: 7px;
-    background: rgba(78, 53, 38, .45)
+    background: rgba(106, 68, 53, .45)
 }
 
 .sprig {
@@ -95,7 +107,7 @@ button:focus-visible {
     letter-spacing: .55em;
     font-size: 12.5px;
     font-weight: 700;
-    color: #cdd6a8;
+    color: var(--beige);
     padding-left: .55em
 }
 
@@ -107,7 +119,7 @@ button:focus-visible {
 .desc {
     font-size: 13px;
     opacity: .75;
-    margin: 14px auto 18px;
+    margin: 18px auto 16px;
     max-width: 330px;
     line-height: 1.7
 }
@@ -123,8 +135,15 @@ button:focus-visible {
     display: inline-block
 }
 
+.hero .btn {
+    border: 1px solid var(--red);
+    background: var(--beige);
+    color: var(--brown)
+}
+
 .btn:hover {
-    background: #fff
+    background: var(--olive);
+    color: var(--beige)
 }
 
 .btn:active {
@@ -172,16 +191,16 @@ button:focus-visible {
     margin: 0 auto 5px;
     border-radius: 50%;
     background: var(--paper);
-    border: 2px solid var(--olive);
+    border: 2px solid var(--brown);
     font-style: normal;
     font-size: 27px;
-    box-shadow: 0 3px 8px rgba(78, 53, 38, .15);
+    box-shadow: 0 3px 8px rgba(106, 68, 53, .15);
     transition: transform .2s, background .2s
 }
 
 .qc:hover i {
     transform: translateY(-3px);
-    background: #fff
+    background: var(--beige)
 }
 
 /* nav */
@@ -191,12 +210,12 @@ button:focus-visible {
     z-index: 35;
     margin: 12px auto 0;
     width: min(calc(100% - 20px), 720px);
-    background: rgba(243, 236, 223, .92);
+    background: var(--beige);
     backdrop-filter: blur(8px);
     border: 1px solid var(--line);
     border-radius: 99px;
     padding: 6px;
-    box-shadow: 0 6px 18px rgba(78, 53, 38, .2)
+    box-shadow: 0 8px 20px rgba(106, 68, 53, .15)
 }
 
 .pills {
@@ -222,7 +241,7 @@ button:focus-visible {
 
 .pill.on {
     background: var(--olive);
-    color: #fff
+    color: var(--beige)
 }
 
 /* sections */
@@ -281,7 +300,7 @@ main {
 }
 
 .cat:nth-child(even) .orn {
-    color: #cdd6a8
+    color: var(--beige)
 }
 
 .orn:before,
@@ -311,7 +330,7 @@ main {
 }
 
 .cat:nth-child(even) .grp {
-    color: #cdd6a8
+    color: var(--beige)
 }
 
 .list {
@@ -330,10 +349,10 @@ main {
     width: 100%;
     text-align: right;
     padding: 14px 14px;
-    border: 1px solid rgba(106, 74, 53, .12);
+    border: 1px solid rgba(106, 68, 53, .12);
     border-radius: 8px;
-    background: rgba(243, 236, 223, .46);
-    box-shadow: 0 3px 12px rgba(78, 53, 38, .045);
+    background: rgba(232, 221, 203, .46);
+    box-shadow: 0 3px 12px rgba(106, 68, 53, .08);
     opacity: 0;
     transform: translateY(14px);
     transition: opacity .5s, transform .5s, background .2s, border-color .2s, box-shadow .2s
@@ -345,9 +364,9 @@ main {
 }
 
 .it:hover {
-    background: rgba(243, 236, 223, .88);
+    background: rgba(232, 221, 203, .88);
     border-color: rgba(93, 107, 63, .4);
-    box-shadow: 0 6px 16px rgba(78, 53, 38, .1)
+    box-shadow: 0 6px 16px rgba(106, 68, 53, .1)
 }
 
 .l1 {
@@ -401,8 +420,8 @@ main {
 }
 
 .bd {
-    background: var(--olive);
-    color: #fff;
+    background: var(--red);
+    color: var(--beige);
     font-size: 10.5px;
     font-weight: 800;
     padding: 1px 9px;
@@ -413,7 +432,7 @@ main {
 .ov {
     position: fixed;
     inset: 0;
-    background: rgba(40, 28, 20, .55);
+    background: rgba(106, 68, 53, .72);
     opacity: 0;
     pointer-events: none;
     transition: opacity .25s;
@@ -546,10 +565,10 @@ footer small {
     transform: translateX(-50%);
     display: flex;
     gap: 2px;
-    background: var(--brown-d);
+    background: var(--brown);
     padding: 6px;
     border-radius: 99px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .35)
+    box-shadow: 0 8px 22px rgba(106, 68, 53, .35)
 }
 
 .dock button {
@@ -567,6 +586,12 @@ footer small {
 
 .dock button:hover {
     background: rgba(93, 107, 63, .7)
+}
+
+.dock button.active,
+.dock button:active {
+    background: var(--red);
+    color: var(--beige)
 }
 
 .dock span {
@@ -625,7 +650,7 @@ footer small {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #e0a050;
+    background: var(--red);
     opacity: 0;
     animation: rise linear infinite;
     pointer-events: none
@@ -648,10 +673,10 @@ footer small {
 }
 
 .grill {
-    width: 104px;
-    margin: 18px auto 0;
+    width: 90px;
+    margin: 4px auto 0;
     display: block;
-    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .35))
+    filter: drop-shadow(0 6px 10px rgba(106, 68, 53, .35))
 }
 
 .belt {
@@ -796,7 +821,7 @@ footer small {
     height: 32px;
     border-radius: 50%;
     background: var(--olive);
-    color: #fff;
+    color: var(--beige);
     font-size: 19px;
     font-weight: 800;
     line-height: 1;
@@ -816,7 +841,7 @@ footer small {
 }
 
 .cat:nth-child(even) .q {
-    box-shadow: 0 0 0 1.5px #cdd6a8
+    box-shadow: 0 0 0 1.5px var(--beige)
 }
 
 .qty b {
@@ -842,21 +867,25 @@ footer small {
     left: 50%;
     bottom: calc(84px + env(safe-area-inset-bottom, 0px));
     width: min(92%, 420px);
-    transform: translate(-50%, 200%);
-    transition: transform .4s cubic-bezier(.2, .9, .3, 1.2);
+    transform: translate(-50%, calc(200% + 24px + env(safe-area-inset-bottom, 0px)));
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .4s cubic-bezier(.2, .9, .3, 1.2), opacity .2s;
     background: var(--olive);
-    color: #fff;
+    color: var(--beige);
     border-radius: 99px;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 800;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .35)
+    box-shadow: 0 8px 22px rgba(106, 68, 53, .35)
 }
 
 .cartbar.show {
-    transform: translate(-50%, 0)
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto
 }
 
 .cartbar.pulse {
@@ -1012,7 +1041,7 @@ footer small {
 
 .sheet .btn.wa {
     background: var(--olive);
-    color: #fff
+    color: var(--beige)
 }
 
 @media(prefers-reduced-motion:reduce) {
@@ -1026,12 +1055,13 @@ footer small {
 
 /* ===== هوية طبريا ===== */
 :root {
-    --tat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='16'%3E%3Cg fill='%23A52A2A'%3E%3Crect x='7' y='1' width='2' height='2'/%3E%3Crect x='5' y='3' width='2' height='2'/%3E%3Crect x='9' y='3' width='2' height='2'/%3E%3Crect x='3' y='5' width='2' height='2'/%3E%3Crect x='11' y='5' width='2' height='2'/%3E%3Crect x='1' y='7' width='2' height='2'/%3E%3Crect x='13' y='7' width='2' height='2'/%3E%3Crect x='3' y='9' width='2' height='2'/%3E%3Crect x='11' y='9' width='2' height='2'/%3E%3Crect x='5' y='11' width='2' height='2'/%3E%3Crect x='9' y='11' width='2' height='2'/%3E%3Crect x='7' y='13' width='2' height='2'/%3E%3C/g%3E%3Cg fill='%235D6B3F'%3E%3Crect x='7' y='7' width='2' height='2'/%3E%3Crect x='19' y='7' width='2' height='2'/%3E%3C/g%3E%3C/svg%3E");
+    --tat: url("assets/1.jpeg");
     --leaf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='%23E8DDCB' fill-opacity='.14'%3E%3Cellipse cx='16' cy='16' rx='4' ry='11' transform='rotate(35 16 16)'/%3E%3Cellipse cx='46' cy='22' rx='4' ry='11' transform='rotate(-40 46 22)'/%3E%3Cellipse cx='20' cy='48' rx='4' ry='11' transform='rotate(-30 20 48)'/%3E%3Cellipse cx='50' cy='50' rx='4' ry='11' transform='rotate(45 50 50)'/%3E%3C/g%3E%3Cpath d='M10 24Q16 16 24 10M40 30Q46 22 54 16M14 56Q20 48 28 42' stroke='%23E8DDCB' stroke-opacity='.12' fill='none'/%3E%3C/svg%3E")
 }
 
 .hero {
-    background: var(--olive) var(--leaf)
+    background: var(--olive) var(--leaf);
+    color: var(--beige)
 }
 
 .arch {
@@ -1042,7 +1072,7 @@ footer small {
     outline-offset: 8px;
     width: min(310px, 84%);
     padding: 56px 18px 26px;
-    box-shadow: 0 0 60px rgba(240, 205, 140, .5), inset 0 -40px 60px rgba(106, 74, 53, .1)
+    box-shadow: 0 0 36px rgba(106, 68, 53, .12)
 }
 
 .sprig {
@@ -1098,12 +1128,16 @@ footer small {
 }
 
 .band {
-    height: 16px;
-    background: var(--beige) var(--tat) repeat-x center;
+    height: 42px;
+    background: var(--beige) url("assets/1.jpeg") repeat-x center;
+    background-size: auto 42px;
     border-block: 1px solid var(--line)
 }
 
-.quick .qc i,
+.quick .qc i {
+    color: var(--brown)
+}
+
 .ch .ic {
     color: var(--olive)
 }
@@ -1146,8 +1180,8 @@ svg.i {
     position: absolute;
     left: 0;
     right: 0;
-    height: 16px;
-    background: var(--beige) var(--tat) repeat-x center
+    height: 8px;
+    background: var(--beige)
 }
 
 .cat:nth-child(even):before {
@@ -1171,20 +1205,20 @@ svg.i {
 }
 
 .cat:nth-child(even) .bd {
-    background: var(--beige);
-    color: var(--olive)
+    background: var(--red);
+    color: var(--beige)
 }
 
 .cat:nth-child(even) .it {
-    background: rgba(243, 236, 223, .08);
-    border-color: rgba(243, 236, 223, .16);
+    background: rgba(232, 221, 203, .08);
+    border-color: rgba(232, 221, 203, .16);
     box-shadow: none
 }
 
 .cat:nth-child(even) .it:hover {
     background: rgba(232, 221, 203, .15);
     border-color: rgba(232, 221, 203, .34);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, .1)
+    box-shadow: 0 6px 16px rgba(106, 68, 53, .18)
 }
 
 .emo {
@@ -1224,7 +1258,7 @@ svg.i {
     overflow: hidden;
     outline: 2px solid var(--olive);
     outline-offset: 8px;
-    box-shadow: 0 12px 30px rgba(78, 53, 38, .3)
+    box-shadow: 0 12px 30px rgba(106, 68, 53, .3)
 }
 
 .frame img {
@@ -1263,7 +1297,7 @@ svg.i {
 }
 
 .visit-kicker {
-    color: #cdd6a8;
+    color: var(--beige);
     font-size: 13px;
     font-weight: 800
 }
@@ -1289,7 +1323,7 @@ svg.i {
 
 .visit-hours strong,
 .visit-address strong {
-    color: #cdd6a8;
+    color: var(--beige);
     font-size: 12px
 }
 
@@ -1301,7 +1335,7 @@ svg.i {
 .visit-address {
     margin: 0 !important;
     padding-inline-start: 14px;
-    border-inline-start: 2px solid #cdd6a8
+    border-inline-start: 2px solid var(--beige)
 }
 
 .visit-actions {
@@ -1327,7 +1361,7 @@ svg.i {
 }
 
 .visit-link:hover {
-    background: #fff;
+    background: var(--beige);
     transform: translateY(-2px)
 }
 
@@ -1375,7 +1409,7 @@ footer .logo {
 
 footer .sprig,
 footer .waves {
-    color: #cdd6a8
+    color: var(--beige)
 }
 
 footer .logo-en {
