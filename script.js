@@ -74,10 +74,23 @@ const MENU = [
 ];
 /* ===== الإعدادات ===== */
 const WA_NUMBER = "+201282985878"; // رقم واتساب المطعم بالصيغة الدولية بدون + أو أصفار، مثال: "201001234567"
+const CART_STORAGE_KEY = "tabaria-order-v1";
+const DELIVERY_FEE = 30;
+const RESTAURANT_ADDRESS = "23 عمر لطفي، محطة ترام كامب شيزار";
+const RESTAURANT_HOURS = "من 8:00 صباحًا إلى 2:00 بعد منتصف الليل";
+const RESTAURANT_PHONE = WA_NUMBER.replace(/\D/g, "");
+const waLink = message => `https://wa.me/${WA_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 /* ===== الواجهة ===== */
 const $ = s => document.querySelector(s), flat = [], cart = {};
 const fmt = p => p + " ج.م";
 let mode = "", tbl = "", note = "", orderType = "delivery";
+$("#visitAddress").textContent = RESTAURANT_ADDRESS;
+$("#visitHours").textContent = RESTAURANT_HOURS;
+$("#visitMap").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(RESTAURANT_ADDRESS)}`;
+$("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
+$("#visitPhoneNumber").textContent = `+${RESTAURANT_PHONE}`;
+$("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
 const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
 $("#quick").innerHTML = MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
 $("#pills").innerHTML = MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
@@ -96,12 +109,43 @@ const closeSheet = () => { ov.classList.remove("show"); mode = "" };
 /* ===== الطلب ===== */
 const count = () => Object.values(cart).reduce((a, b) => a + b, 0);
 const sum = () => Object.entries(cart).reduce((a, [k, q]) => a + flat[k].p * q, 0);
+const total = () => sum() + (orderType === "delivery" ? DELIVERY_FEE : 0);
+function persistOrder() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ cart, orderType, tbl, note }));
+  } catch { }
+}
+function restoreOrder() {
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "null");
+  } catch { return }
+  if (!saved || typeof saved !== "object") return;
+  orderType = saved.orderType === "pickup" ? "pickup" : "delivery";
+  tbl = typeof saved.tbl === "string" ? saved.tbl : "";
+  note = typeof saved.note === "string" ? saved.note : "";
+  if (saved.cart && typeof saved.cart === "object" && !Array.isArray(saved.cart)) {
+    Object.entries(saved.cart).forEach(([key, quantity]) => {
+      const index = Number(key);
+      if (Number.isInteger(index) && index >= 0 && index < flat.length && Number.isSafeInteger(quantity) && quantity > 0) cart[index] = quantity;
+    });
+  }
+  Object.keys(cart).forEach(key => {
+    const item = document.querySelector(`[data-q="${key}"]`);
+    if (item) item.innerHTML = qtyHtml(key);
+  });
+  $("#cn").textContent = `🛒 ${count()} وجبة`;
+  $("#ct").textContent = fmt(total());
+  $("#cartbar").classList.toggle("show", count() > 0);
+}
+restoreOrder();
 function update(k, d) {
   cart[k] = (cart[k] || 0) + d; if (cart[k] <= 0) delete cart[k];
+  persistOrder();
   const el = document.querySelector(`[data-q="${k}"]`); el.innerHTML = qtyHtml(k);
   const b = el.querySelector("b"); if (b) b.classList.add("bump");
   const bar = $("#cartbar"); bar.classList.toggle("show", count() > 0);
-  $("#cn").textContent = `🛒 ${count()} وجبة`; $("#ct").textContent = fmt(sum());
+  $("#cn").textContent = `🛒 ${count()} وجبة`; $("#ct").textContent = fmt(total());
   bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse");
   if (mode === "cart") openCart();
 }
@@ -109,9 +153,10 @@ function openCart() {
   mode = "cart";
   const ks = Object.keys(cart);
   if (!ks.length) { closeSheet(); return }
+  const deliveryMessage = orderType === "delivery" ? `رسوم التوصيل: ${fmt(DELIVERY_FEE)}` : "لا توجد رسوم توصيل على الاستلام.";
   sh.innerHTML = `<div class="grab"></div><h3>طلبك</h3>` + ks.map(k => `<div class="ln"><span>${flat[k].n}</span><div class="qty"><button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button></div><em>${fmt(flat[k].p * cart[k])}</em></div>`).join("") +
     `<fieldset class="order-type"><legend>نوع الطلب</legend><label class="type-option${orderType === "delivery" ? " active" : ""}"><input type="radio" name="orderType" value="delivery"${orderType === "delivery" ? " checked" : ""}>توصيل</label><label class="type-option${orderType === "pickup" ? " active" : ""}"><input type="radio" name="orderType" value="pickup"${orderType === "pickup" ? " checked" : ""}>استلام من المطعم</label></fieldset>` +
-    `<div class="address-field" id="addressField"${orderType === "pickup" ? " hidden" : ""}><label for="tbl">عنوان التوصيل <span>*</span></label><input class="fld" id="tbl" placeholder="الحي – الشارع – رقم المنزل" value="${tbl}" required></div><textarea class="fld" id="note" rows="2" placeholder="ملاحظات (اختياري)">${note}</textarea><div class="order-summary"><div class="tot"><span>إجمالي الأصناف</span><b>${fmt(sum())}</b></div><p id="deliveryNote">${orderType === "delivery" ? "رسوم التوصيل تحدد حسب المنطقة" : "لا توجد رسوم توصيل عند الاستلام"}</p></div><button class="btn wa" id="send">إرسال الطلب عبر واتساب</button><button class="btn" id="close">متابعة التسوق</button>`;
+    `<div class="address-field" id="addressField"${orderType === "pickup" ? " hidden" : ""}><label for="tbl">عنوان التوصيل <span>*</span></label><input class="fld" id="tbl" placeholder="الحي – الشارع – رقم المنزل" value="${escapeHTML(tbl)}" required></div><textarea class="fld" id="note" rows="2" placeholder="ملاحظات (اختياري)">${escapeHTML(note)}</textarea><div class="order-summary"><div class="tot"><span>إجمالي الأصناف</span><b>${fmt(sum())}</b></div><p id="deliveryNote">${deliveryMessage}</p><div class="tot final-total"><span>الإجمالي</span><b id="grandTotal">${fmt(total())}</b></div></div><button class="btn wa" id="send">إرسال الطلب عبر واتساب</button><button class="btn" id="close">متابعة التسوق</button>`;
   ov.classList.add("show");
 }
 function send() {
@@ -119,10 +164,11 @@ function send() {
   if (orderType === "delivery" && !tbl.trim()) { $("#tbl").reportValidity(); return }
   let t = "طلب جديد من منيو طبريا 🌿\n";
   t += `نوع الطلب: ${orderType === "delivery" ? "توصيل" : "استلام من المطعم"}\n`;
-  if (orderType === "delivery") t += `عنوان التوصيل: ${tbl.trim()}\nرسوم التوصيل: تحدد حسب المنطقة\n`;
-  t += "\n" + Object.entries(cart).map(([k, q]) => `• ${q} × ${flat[k].n} — ${fmt(flat[k].p * q)}`).join("\n") + `\n\nإجمالي الأصناف: ${fmt(sum())}`;
+  if (orderType === "delivery") t += `عنوان التوصيل: ${tbl.trim()}\nرسوم التوصيل: ${fmt(DELIVERY_FEE)}\n`;
+  else t += "رسوم التوصيل: لا توجد\n";
+  t += "\n" + Object.entries(cart).map(([k, q]) => `• ${q} × ${flat[k].n} — ${fmt(flat[k].p * q)}`).join("\n") + `\n\nإجمالي الأصناف: ${fmt(sum())}\nالإجمالي: ${fmt(total())}`;
   if (note.trim()) t += `\nملاحظات: ${note.trim()}`;
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`, "_blank");
+  window.open(waLink(t), "_blank");
 }
 document.addEventListener("click", e => {
   const t = e.target.closest("[data-cat],[data-go],[data-det],[data-add],[data-sub],#send,#close,#cartbar"); if (!t) return;
@@ -142,14 +188,18 @@ document.addEventListener("click", e => {
 document.addEventListener("input", e => {
   if (e.target.id === "tbl") tbl = e.target.value;
   if (e.target.id === "note") note = e.target.value;
+  if (e.target.id === "tbl" || e.target.id === "note") persistOrder();
 });
 document.addEventListener("change", e => {
   if (e.target.name !== "orderType") return;
   orderType = e.target.value;
   $("#addressField").hidden = orderType === "pickup";
   $("#tbl").required = orderType === "delivery";
-  $("#deliveryNote").textContent = orderType === "delivery" ? "رسوم التوصيل تحدد حسب المنطقة" : "لا توجد رسوم توصيل عند الاستلام";
+  $("#deliveryNote").textContent = orderType === "delivery" ? `رسوم التوصيل: ${fmt(DELIVERY_FEE)}` : "لا توجد رسوم توصيل على الاستلام.";
+  $("#grandTotal").textContent = fmt(total());
+  $("#ct").textContent = fmt(total());
   document.querySelectorAll(".type-option").forEach(label => label.classList.toggle("active", label.contains(e.target)));
+  persistOrder();
 });
 $("#cats").onclick = () => { mode = "cats"; sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
 ov.addEventListener("click", e => { if (e.target === ov) closeSheet() });
