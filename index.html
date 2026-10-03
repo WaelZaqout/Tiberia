@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>طبريا | TABARIA — المنيو</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Aref+Ruqaa:wght@700&family=Montserrat:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="sprig" viewBox="0 0 60 70">
+        <path d="M8 66C14 44 28 24 48 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+        <g fill="currentColor">
+          <ellipse cx="14" cy="50" rx="3.4" ry="9" transform="rotate(-55 14 50)" />
+          <ellipse cx="22" cy="52" rx="3.4" ry="9" transform="rotate(35 22 52)" />
+          <ellipse cx="22" cy="36" rx="3.4" ry="9" transform="rotate(-50 22 36)" />
+          <ellipse cx="31" cy="38" rx="3.4" ry="9" transform="rotate(40 31 38)" />
+          <ellipse cx="32" cy="24" rx="3.2" ry="8.5" transform="rotate(-45 32 24)" />
+          <ellipse cx="41" cy="26" rx="3.2" ry="8.5" transform="rotate(45 41 26)" />
+          <ellipse cx="44" cy="12" rx="3" ry="8" transform="rotate(-40 44 12)" />
+          <ellipse cx="51" cy="14" rx="3" ry="8" transform="rotate(55 51 14)" />
+        </g>
+      </symbol>
+      <symbol id="waves" viewBox="0 0 160 24">
+        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M2 6q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+          <path d="M2 12q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+          <path d="M2 18q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="prog"><i id="prog"></i></div>
+  <header class="hero" id="home">
+    <svg class="star" viewBox="0 0 100 100" fill="none" stroke="#E8DDCB" stroke-width=".8">
+      <path d="M50 2l9 29 29-9-20 23 20 23-29-9-9 29-9-29-29 9 20-23-20-23 29 9z" />
+      <circle cx="50" cy="50" r="46" />
+    </svg>
+    <div class="arch">
+      <svg class="sprig" viewBox="0 0 60 70">
+        <use href="#sprig" />
+      </svg>
+      <h1 class="logo">طبريا</h1>
+      <svg class="waves" viewBox="0 0 160 24">
+        <use href="#waves" />
+      </svg>
+      <p class="sub">نكهة الأرض من قلب فلسطين</p>
+      <div class="logo-en"><i>◆</i>TABARIA<i>◆</i></div>
+    </div>
+    <svg class="grill" viewBox="0 0 120 150" aria-hidden="true">
+      <defs>
+        <clipPath id="cone">
+          <path d="M30 18h60q7 0 5 9L79 118q-1 9-9 9H50q-8 0-9-9L25 27q-2-9 5-9z" />
+        </clipPath>
+        <pattern id="stripes" width="20" height="150" patternUnits="userSpaceOnUse">
+          <rect width="20" height="150" fill="#9a6a45" />
+          <rect width="8" height="150" fill="#6A4A35" />
+        </pattern>
+        <linearGradient id="shade" x1="0" x2="1">
+          <stop offset="0" stop-color="#000" stop-opacity=".55" />
+          <stop offset=".5" stop-color="#fff" stop-opacity=".12" />
+          <stop offset="1" stop-color="#000" stop-opacity=".55" />
+        </linearGradient>
+      </defs>
+      <path class="flame" d="M10 140c-8-14 2-20 4-34 6 8 14 18 6 34z" fill="#d98b3a" />
+      <path class="flame b" d="M12 140c-4-8 0-12 2-20 4 5 8 11 3 20z" fill="#A52A2A" />
+      <path class="flame b" d="M110 140c8-14-2-20-4-34-6 8-14 18-6 34z" fill="#d98b3a" />
+      <path class="flame" d="M108 140c4-8 0-12-2-20-4 5-8 11-3 20z" fill="#A52A2A" />
+      <g class="spitwob">
+        <rect x="58" y="2" width="4" height="146" rx="2" fill="#E8DDCB" />
+        <g clip-path="url(#cone)">
+          <rect class="belt" x="-30" y="0" width="190" height="150" fill="url(#stripes)" />
+          <rect x="0" y="0" width="120" height="150" fill="url(#shade)" />
+        </g>
+        <ellipse cx="60" cy="18" rx="30" ry="4" fill="#8a5d3d" />
+      </g>
+    </svg>
+    <p class="desc">مطبخ فلسطيني شامي بطابع تراثي عصري، من الشاورما إلى الكبسة والمقلوبة.</p>
+    <button class="btn" data-go="menu">استعرض المنيو</button>
+    <svg class="wave" viewBox="0 0 400 30" preserveAspectRatio="none">
+      <path d="M0 30V14Q50 0 100 14T200 14T300 14T400 14V30z" fill="#E8DDCB" />
+    </svg>
+  </header>
+  <div class="band"></div>
+  <div class="quick" id="quick" aria-label="الأقسام"></div>
+  <nav class="nav" aria-label="أقسام المنيو">
+    <div class="pills" id="pills"></div>
+  </nav>
+  <main id="menu"></main>
+  <section class="about">
+    <div class="in">
+      <div class="frame"><img src="assets/interior.jpg" alt="صالة مطعم طبريا" loading="lazy"></div>
+      <div class="at">
+        <h2>نكهة الأرض من قلب فلسطين</h2><svg class="waves" viewBox="0 0 160 24">
+          <use href="#waves" />
+        </svg>
+        <p>زيت الزيتون وخبز الطابون وشاورما على الفحم، في جلسة دافئة بروح البيت الفلسطيني. أهلًا بكم في طبريا.</p>
+      </div>
+    </div>
+  </section>
+  <footer id="footer">
+    <div class="band"></div>
+    <svg class="sprig" viewBox="0 0 60 70">
+      <use href="#sprig" />
+    </svg>
+    <div class="logo">طبريا</div><svg class="waves" viewBox="0 0 160 24">
+      <use href="#waves" />
+    </svg>
+    <small>نكهة الأرض من قلب فلسطين</small>
+    <div class="logo-en"><i>◆</i>TABARIA<i>◆</i></div><small>الأسعار بالجنيه المصري</small>
+  </footer>
+  <button class="cartbar" id="cartbar" aria-label="عرض الطلب"><span id="cn"></span><span id="ct"></span><span>عرض الطلب
+      ←</span></button>
+  <div class="dock"><button data-go="home"><span>⌂</span>الرئيسية</button><button
+      id="cats"><span>☰</span>الأقسام</button><button data-go="menu"><span>◈</span>المنيو</button></div>
+  <div class="ov" id="ov" role="dialog" aria-modal="true">
+    <div class="sheet" id="sheet"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
