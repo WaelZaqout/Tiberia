@@ -77,7 +77,7 @@ const WA_NUMBER = "+201282985878"; // رقم واتساب المطعم بالص�
 /* ===== الواجهة ===== */
 const $ = s => document.querySelector(s), flat = [], cart = {};
 const fmt = p => p + " ج.م";
-let mode = "", tbl = "", note = "";
+let mode = "", tbl = "", note = "", orderType = "delivery";
 const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
 $("#quick").innerHTML = MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
 $("#pills").innerHTML = MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
@@ -110,14 +110,17 @@ function openCart() {
   const ks = Object.keys(cart);
   if (!ks.length) { closeSheet(); return }
   sh.innerHTML = `<div class="grab"></div><h3>طلبك</h3>` + ks.map(k => `<div class="ln"><span>${flat[k].n}</span><div class="qty"><button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button></div><em>${fmt(flat[k].p * cart[k])}</em></div>`).join("") +
-    `<div class="tot"><span>الإجمالي</span><b>${fmt(sum())}</b></div><input class="fld" id="tbl" placeholder="العنوان (بالتفصيل)" value="${tbl}"><textarea class="fld" id="note" rows="2" placeholder="ملاحظات (اختياري)">${note}</textarea><button class="btn wa" id="send">إرسال الطلب عبر واتساب</button><button class="btn" id="close">رجوع للمنيو</button>`;
+    `<fieldset class="order-type"><legend>نوع الطلب</legend><label class="type-option${orderType === "delivery" ? " active" : ""}"><input type="radio" name="orderType" value="delivery"${orderType === "delivery" ? " checked" : ""}>توصيل</label><label class="type-option${orderType === "pickup" ? " active" : ""}"><input type="radio" name="orderType" value="pickup"${orderType === "pickup" ? " checked" : ""}>استلام من المطعم</label></fieldset>` +
+    `<div class="address-field" id="addressField"${orderType === "pickup" ? " hidden" : ""}><label for="tbl">عنوان التوصيل <span>*</span></label><input class="fld" id="tbl" placeholder="الحي – الشارع – رقم المنزل" value="${tbl}" required></div><textarea class="fld" id="note" rows="2" placeholder="ملاحظات (اختياري)">${note}</textarea><div class="order-summary"><div class="tot"><span>إجمالي الأصناف</span><b>${fmt(sum())}</b></div><p id="deliveryNote">${orderType === "delivery" ? "رسوم التوصيل تحدد حسب المنطقة" : "لا توجد رسوم توصيل عند الاستلام"}</p></div><button class="btn wa" id="send">إرسال الطلب عبر واتساب</button><button class="btn" id="close">متابعة التسوق</button>`;
   ov.classList.add("show");
 }
 function send() {
-  tbl = $("#tbl").value; note = $("#note").value;
+  tbl = $("#tbl")?.value || ""; note = $("#note").value;
+  if (orderType === "delivery" && !tbl.trim()) { $("#tbl").reportValidity(); return }
   let t = "طلب جديد من منيو طبريا 🌿\n";
-  if (tbl.trim()) t += `العنوان : ${tbl.trim()}\n`;
-  t += "\n" + Object.entries(cart).map(([k, q]) => `• ${q} × ${flat[k].n} — ${fmt(flat[k].p * q)}`).join("\n") + `\n\nالإجمالي: ${fmt(sum())}`;
+  t += `نوع الطلب: ${orderType === "delivery" ? "توصيل" : "استلام من المطعم"}\n`;
+  if (orderType === "delivery") t += `عنوان التوصيل: ${tbl.trim()}\nرسوم التوصيل: تحدد حسب المنطقة\n`;
+  t += "\n" + Object.entries(cart).map(([k, q]) => `• ${q} × ${flat[k].n} — ${fmt(flat[k].p * q)}`).join("\n") + `\n\nإجمالي الأصناف: ${fmt(sum())}`;
   if (note.trim()) t += `\nملاحظات: ${note.trim()}`;
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`, "_blank");
 }
@@ -132,9 +135,21 @@ document.addEventListener("click", e => {
   else if (t.dataset.go) go(t.dataset.go);
   else {
     const k = +t.dataset.det, it = flat[k]; mode = "det";
-    sh.innerHTML = `<div class="grab"></div><div class="emo">${it.icon}</div><h3>${it.n}</h3><div class="e">${it.en}</div>${it.badge ? `<span class="bd">${it.badge}</span>` : ""}<p>${it.d}</p><span class="price">${fmt(it.p)}</span><button class="btn wa" data-add="${k}" id="dadd">أضف إلى الطلب</button><button class="btn" id="close">رجوع للمنيو</button>`;
+    sh.innerHTML = `<div class="grab"></div><div class="emo">${it.icon}</div><h3>${it.n}</h3><div class="e">${it.en}</div>${it.badge ? `<span class="bd">${it.badge}</span>` : ""}<p>${it.d}</p><span class="price">${fmt(it.p)}</span><button class="btn wa" data-add="${k}" id="dadd">أضف إلى الطلب</button><button class="btn" id="close">متابعة التسوق</button>`;
     ov.classList.add("show")
   }
+});
+document.addEventListener("input", e => {
+  if (e.target.id === "tbl") tbl = e.target.value;
+  if (e.target.id === "note") note = e.target.value;
+});
+document.addEventListener("change", e => {
+  if (e.target.name !== "orderType") return;
+  orderType = e.target.value;
+  $("#addressField").hidden = orderType === "pickup";
+  $("#tbl").required = orderType === "delivery";
+  $("#deliveryNote").textContent = orderType === "delivery" ? "رسوم التوصيل تحدد حسب المنطقة" : "لا توجد رسوم توصيل عند الاستلام";
+  document.querySelectorAll(".type-option").forEach(label => label.classList.toggle("active", label.contains(e.target)));
 });
 $("#cats").onclick = () => { mode = "cats"; sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
 ov.addEventListener("click", e => { if (e.target === ov) closeSheet() });
