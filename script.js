@@ -105,11 +105,15 @@ $("#menu").innerHTML = MENU.map(c => {
 }).join("");
 const go = id => document.getElementById(id).scrollIntoView({ behavior: "smooth" });
 const ov = $("#ov"), sh = $("#sheet");
-const closeSheet = () => { ov.classList.remove("show"); mode = "" };
+const closeSheet = () => {
+  ov.classList.remove("show");
+  if (mode === "cats") { $("#cats").classList.remove("active"); $("#cats").setAttribute("aria-pressed", "false") }
+  mode = "";
+};
 /* ===== الطلب ===== */
 const count = () => Object.values(cart).reduce((a, b) => a + b, 0);
 const sum = () => Object.entries(cart).reduce((a, [k, q]) => a + flat[k].p * q, 0);
-const total = () => sum() + (orderType === "delivery" ? DELIVERY_FEE : 0);
+const total = () => count() ? sum() + (orderType === "delivery" ? DELIVERY_FEE : 0) : 0;
 function persistOrder() {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ cart, orderType, tbl, note }));
@@ -201,26 +205,24 @@ document.addEventListener("change", e => {
   document.querySelectorAll(".type-option").forEach(label => label.classList.toggle("active", label.contains(e.target)));
   persistOrder();
 });
-$("#cats").onclick = () => { mode = "cats"; sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
+$("#cats").onclick = () => { mode = "cats"; $("#cats").classList.add("active"); $("#cats").setAttribute("aria-pressed", "true"); sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
 ov.addEventListener("click", e => { if (e.target === ov) closeSheet() });
 addEventListener("keydown", e => { if (e.key === "Escape") closeSheet() });
 /* ===== حركات التمرير ===== */
 const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("v"); io.unobserve(x.target) } }), { threshold: .12 });
 document.querySelectorAll(".it").forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + "ms"; io.observe(el) });
 document.querySelectorAll(".ch").forEach(el => io.observe(el));
-/* شرر فوق الشواية */
-const hero = $("#home");
-for (let i = 0; i < 14; i++) {
-  const e = document.createElement("span"); e.className = "ember";
-  e.style.cssText = `left:${42 + Math.random() * 16}%;--dx:${(Math.random() - .5) * 120}px;animation-duration:${3 + Math.random() * 3}s;animation-delay:${Math.random() * 4}s`; hero.appendChild(e)
-}
 /* تمرير: شريط التقدم + بارالاكس + القسم النشط */
-const secs = [...document.querySelectorAll(".cat")], pills = [...document.querySelectorAll(".pill")], box = $("#pills"), arch = $(".arch"), star = $(".star");
+const secs = [...document.querySelectorAll(".cat")], pills = [...document.querySelectorAll(".pill")], box = $("#pills"), dockHome = $(".dock [data-go='home']"), dockMenu = $(".dock [data-go='menu']");
 let last = -1;
 function onScroll() {
   const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
   $("#prog").style.width = (h > 0 ? y / h * 100 : 0) + "%";
-  if (y < 900) { arch.style.transform = `translateY(${y * .12}px)`; star.style.marginTop = (y * .25) + "px" }
+  const homeActive = y < $("#home").offsetHeight * .75;
+  dockHome.classList.toggle("active", homeActive);
+  dockMenu.classList.toggle("active", !homeActive);
+  dockHome.setAttribute("aria-pressed", String(homeActive));
+  dockMenu.setAttribute("aria-pressed", String(!homeActive));
   let cur = 0; secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= innerHeight * .35) cur = i });
   if (cur === last) return; last = cur;
   pills.forEach((p, i) => p.classList.toggle("on", i === cur));
