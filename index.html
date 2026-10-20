@@ -38,7 +38,8 @@
   </svg>
   <div class="prog"><i id="prog"></i></div>
   <header class="hero" id="home">
-    <div class="brand-plaque" role="img" aria-label="شعار مطعم طبريا">
+    <img class="hero-brand" src="assets/logo-transparent.png" alt="شعار طبريا مع خريطة فلسطين">
+    <div class="brand-plaque" role="img" aria-label="شعار مطعم طبريا" hidden>
       <svg class="plaque-art" viewBox="0 0 840 280" preserveAspectRatio="none" aria-hidden="true">
         <defs>
           <path id="plaqueShape"
@@ -58,7 +59,7 @@
           </g>
         </defs>
         <use href="#plaqueShape" fill="#d8cbb9" stroke="#6B7047" stroke-width="5" />
-        <use href="#plaqueShape" fill="none" stroke="#6A4435" stroke-width="1.5"
+        <use href="#plaqueShape" fill="none" stroke="#6A4A35" stroke-width="1.5"
           transform="translate(8 7) scale(.981)" />
         <use href="#plaqueShape" fill="none" stroke="#85734E" stroke-width="1"
           transform="translate(15 13) scale(.964)" />
@@ -66,7 +67,7 @@
         <use href="#plaqueBranch" transform="translate(840 0) scale(-1 1)" />
         <g fill="none" stroke="#8B2C29" stroke-width="1.6">
           <path d="M165 139h96m-96 3h96M579 139h96m-96 3h96" />
-          <path d="m180 137 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Zm411 0 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Z" fill="#6A4435" />
+          <path d="m180 137 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Zm411 0 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Z" fill="#6A4A35" />
         </g>
         <use href="#plaqueFlourish" x="86" y="140" />
         <use href="#plaqueFlourish" x="754" y="140" />
@@ -75,19 +76,19 @@
       </svg>
       <img class="brand-logo" src="assets/logo.jpeg" alt="">
     </div>
-    <svg class="grill" viewBox="0 0 120 150" role="img" aria-label="سيخ شاورما متحرك">
+    <svg class="grill" viewBox="0 0 120 150" role="img" aria-label="سيخ شاورما متحرك" hidden>
       <defs>
         <clipPath id="cone">
           <path d="M30 18h60q7 0 5 9L79 118q-1 9-9 9H50q-8 0-9-9L25 27q-2-9 5-9z" />
         </clipPath>
         <pattern id="stripes" width="20" height="150" patternUnits="userSpaceOnUse">
           <rect width="20" height="150" fill="#5D6B3F" />
-          <rect width="8" height="150" fill="#6A4435" />
+          <rect width="8" height="150" fill="#6A4A35" />
         </pattern>
         <linearGradient id="shade" x1="0" x2="1">
-          <stop offset="0" stop-color="#6A4435" stop-opacity=".55" />
+          <stop offset="0" stop-color="#6A4A35" stop-opacity=".55" />
           <stop offset=".5" stop-color="#E8DDCB" stop-opacity=".12" />
-          <stop offset="1" stop-color="#6A4435" stop-opacity=".55" />
+          <stop offset="1" stop-color="#6A4A35" stop-opacity=".55" />
         </linearGradient>
       </defs>
       <path class="flame" d="M10 140c-8-14 2-20 4-34 6 8 14 18 6 34z" fill="#5D6B3F" />
@@ -102,15 +103,14 @@
         </g>
         <path d="M30 18h60q7 0 5 9L79 118q-1 9-9 9H50q-8 0-9-9L25 27q-2-9 5-9z" fill="none" stroke="#E8DDCB"
           stroke-width="2.5" stroke-linejoin="round" />
-        <ellipse cx="60" cy="18" rx="30" ry="4" fill="#6A4435" />
+        <ellipse cx="60" cy="18" rx="30" ry="4" fill="#6A4A35" />
       </g>
     </svg>
-    <p class="desc">طبريا … حكاية فلسطينية تروى على ارض الكنانة</p>
-    <button class="btn" data-go="menu">استعرض المنيو</button>
+    <p class="desc">طبريا … حكاية فلسطينية تروى</p>
   </header>
   <div class="band" aria-hidden="true"></div>
-  <div class="quick" id="quick" aria-label="الأقسام"></div>
-  <nav class="nav" aria-label="أقسام المنيو">
+  <div class="quick" id="quick" aria-label="الأقسام" hidden></div>
+  <nav class="nav" aria-label="أقسام المنيو" hidden>
     <div class="pills" id="pills"></div>
   </nav>
   <main id="menu"></main>
@@ -175,7 +175,7 @@
   <button class="cartbar" id="cartbar" aria-label="عرض الطلب"><span id="cn"></span><span id="ct"></span><span>عرض الطلب
       ←</span></button>
   <div class="dock"><button data-go="home"><span>⌂</span>الرئيسية</button><button
-      id="cats"><span>☰</span>الأقسام</button><button data-go="menu"><span>◈</span>المنيو</button></div>
+      id="cats" hidden><span>☰</span>الأقسام</button><button data-go="menu"><span>◈</span>المنيو</button></div>
   <div class="ov" id="ov" role="dialog" aria-modal="true">
     <div class="sheet" id="sheet"></div>
   </div>
