@@ -1,18 +1,42 @@
-/* ===== بيانات المنيو — عدّل هنا فقط (الأسعار تجريبية) ===== */
+/* ===== بيانات المنيو — الأقسام غير النشطة محفوظة ويمكن إعادتها لاحقًا ===== */
 const MENU = [
   {
     id: "shawarma", name: "الشاورما", icon: "🌯", groups: [
       {
-        title: "سندويتشات", items: [
-          { n: "شاورما دجاج", en: "Chicken Shawarma", d: "دجاج متبّل مشوي على السيخ مع ثومية ومخلل.", p: 70 },
-          { n: "شاورما لحم", en: "Beef Shawarma", d: "شرائح لحم طرية مع طحينة وبصل وسماق.", p: 90 },
-          { n: "شاورما ميكس", en: "Mixed Shawarma", d: "دجاج ولحم معًا في رغيف واحد.", p: 95, badge: "الأكثر طلبًا" }]
+        title: "الشاورما", items: [
+          { n: "شاورما بيتا مندي", d: "شاورما متبّلة بنكهة المندي داخل خبز بيتا.", options: [{ label: "فراخ", p: 85 }, { label: "لحمة", p: 140 }] },
+          { n: "شاورما فرشوحة مندي", d: "شاورما بنكهة المندي داخل خبز فرشوحة.", options: [{ label: "فراخ", p: 120 }, { label: "لحمة", p: 210 }] },
+          { n: "وجبة الحريف", d: "وجبة شاورما مميزة بطعم غني ومُرضٍ.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
+          { n: "كايزر", d: "ساندويتش شاورما يُقدّم في خبز كايزر.", options: [{ label: "فراخ", p: 65 }, { label: "لحمة", p: 90 }] },
+          { n: "فتة شاورما", d: "فتة شاورما بطبقات من الخبز ونكهة الشاورما.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 220 }] }]
       },
       {
-        title: "وجبات", items: [
-          { n: "وجبة شاورما دجاج", en: "Chicken Shawarma Meal", d: "ساندويتش مع بطاطا مقرمشة وسلطة ومشروب.", p: 120 },
-          { n: "وجبة شاورما لحم", en: "Beef Shawarma Meal", d: "ساندويتش مع بطاطا مقرمشة وسلطة ومشروب.", p: 145 },
-          { n: "وجبة شاورما ميكس", en: "Mixed Shawarma Meal", d: "ميكس دجاج ولحم مع بطاطا وسلطة ومشروب.", p: 150 }]
+        title: "شاورما وزن", items: [
+          { n: "ربع كيلو", d: "شاورما فراخ بوزن ربع كيلو، تُحضّر طازجة عند الطلب.", options: [{ label: "فراخ", p: 200 }, { label: "لحمة", p: 350 }] },
+          { n: "نصف كيلو", d: "شاورما فراخ بوزن نصف كيلو، مناسبة للمشاركة.", options: [{ label: "فراخ", p: 400 }, { label: "لحمة", p: 700 }] },
+          { n: "كيلو", d: "كيلو كامل من شاورما الفراخ.", options: [{ label: "فراخ", p: 800 }, { label: "لحمة", p: 1400 }] }]
+      },
+      {
+        title: "شاورما مكس", items: [
+          { n: "مكس فرشوحة", d: "مزيج شاورما يُقدّم في خبز فرشوحة.", options: [{ p: 150 }] },
+          { n: "مكس فرشوحة دبل", d: "حصة دبل من مكس الشاورما داخل خبز فرشوحة.", options: [{ p: 180 }] },
+          { n: "مكس سوري", d: "مزيج شاورما بتقديم على الطريقة السورية.", options: [{ p: 200 }] },
+          { n: "مكس عربي بالجبنة", d: "مكس شاورما عربي مع الجبنة.", options: [{ p: 220 }] },
+          { n: "مكس عربي عادي", d: "مكس شاورما بتقديم عربي كلاسيكي.", options: [{ p: 200 }] },
+          { n: "مكس بيتا", d: "مكس شاورما يُقدّم داخل خبز بيتا.", options: [{ p: 95 }] },
+          { n: "فتة مكس", d: "فتة تجمع بين الخبز ومكس الشاورما.", options: [{ p: 200 }] }]
+      },
+      {
+        title: "الوجبات", items: [
+          { n: "فرشوحة", d: "ساندويتش فرشوحة بالفراخ، متاح بالحجم العادي أو الدبل.", options: [{ label: "فراخ عادي", p: 100 }, { label: "فراخ دبل", p: 200 }, { label: "لحمة عادي", p: 120 }, { label: "لحمة دبل", p: 230 }] },
+          { n: "صاج جبنة وزيتون", d: "شاورما ملفوفة بخبز الصاج مع الجبنة والزيتون.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
+          { n: "وجبة سوري", d: "وجبة شاورما بتقديم سوري.", options: [{ label: "فراخ", p: 150 }, { label: "لحمة", p: 250 }] },
+          { n: "وجبة عربي", d: "وجبة شاورما بتقديم عربي.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
+          { n: "وجبة عربي ملوكي", d: "وجبة عربي بتقديم ملوكي مميز.", options: [{ label: "فراخ", p: 170 }, { label: "لحمة", p: 260 }] },
+          { n: "وجبة الأناناس", d: "وجبة شاورما مع لمسة أناناس لمذاق مميز.", options: [{ label: "فراخ", p: 175 }, { label: "لحمة", p: 230 }] },
+          { n: "فرنسـاوي", d: "ساندويتش شاورما فرنسـاوي بطعم غني.", options: [{ label: "فراخ", p: 95 }, { label: "لحمة", p: 200 }] },
+          { n: "بيتا ساندويتش", d: "ساندويتش شاورما يُقدّم في خبز بيتا.", options: [{ label: "فراخ", p: 75 }, { label: "لحمة", p: 130 }] },
+          { n: "بيتا الناشف", d: "شاورما داخل خبز بيتا بتحضير ناشف ومقرمش.", options: [{ label: "فراخ", p: 85 }, { label: "لحمة", p: 140 }] }]
       }]
   },
   {
@@ -56,7 +80,7 @@ const MENU = [
   {
     id: "extras", name: "الإضافات", icon: "🍟", groups: [{
       items: [
-        { n: "بطاطا", en: "Fries", d: "بطاطا مقلية مقرمشة.", p: 35 },
+        { n: "بطاطا",   en: "Fries", d: "بطاطا مقلية مقرمشة.", p: 35 },
         { n: "ثومية", en: "Garlic Sauce", d: "صوص الثوم الشامي.", p: 10 },
         { n: "مخلل", en: "Pickles", d: "تشكيلة مخللات.", p: 10 },
         { n: "صوص حار", en: "Hot Sauce", d: "صوص حار بنكهة الفلفل.", p: 10 },
@@ -74,14 +98,16 @@ const MENU = [
 ];
 /* ===== الإعدادات ===== */
 const WA_NUMBER = "+201282985878"; // رقم واتساب المطعم بالصيغة الدولية بدون + أو أصفار، مثال: "201001234567"
-const CART_STORAGE_KEY = "tabaria-order-v1";
+const CART_STORAGE_KEY = "tabaria-order-v3";
 const DELIVERY_FEE = 30;
-const RESTAURANT_ADDRESS = "23 عمر لطفي، محطة ترام كامب شيزار";
+const RESTAURANT_ADDRESS = "44 عمر لطفي، محطة ترام كامب شيزار";
 const RESTAURANT_HOURS = "من 8:00 صباحًا إلى 2:00 بعد منتصف الليل";
 const RESTAURANT_PHONE = WA_NUMBER.replace(/\D/g, "");
 const waLink = message => `https://wa.me/${WA_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
 const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 /* ===== الواجهة ===== */
+const MEAT_AVAILABLE = false;
+const ACTIVE_MENU = MENU.filter(category => category.id === "shawarma");
 const $ = s => document.querySelector(s), flat = [], cart = {};
 const fmt = p => p + " ج.م";
 let mode = "", tbl = "", note = "", orderType = "delivery";
@@ -92,15 +118,19 @@ $("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
 $("#visitPhoneNumber").textContent = `+${RESTAURANT_PHONE}`;
 $("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
 const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
-$("#quick").innerHTML = MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
-$("#pills").innerHTML = MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
+$("#quick").innerHTML = ACTIVE_MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
+$("#pills").innerHTML = ACTIVE_MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
 const qtyHtml = k => cart[k] ? `<button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button>` : `<button class="q add" data-add="${k}">+ أضف</button>`;
-$("#menu").innerHTML = MENU.map(c => {
+$("#menu").innerHTML = ACTIVE_MENU.map(c => {
   const total = c.groups.reduce((a, g) => a + g.items.length, 0);
   return `<section class="cat" id="${c.id}"><div class="in"><div class="ch"><span class="ic">${ic(c)}</span><h2>${c.name}</h2><div class="orn">${total} صنف</div></div>` +
     c.groups.map(g => (g.title ? `<div class="grp">${g.title}</div>` : "") + `<div class="list">` + g.items.map(it => {
-      const k = flat.push({ ...it, icon: ic(c) }) - 1;
-      return `<div class="it"><div class="l1"><strong>${it.n}</strong>${it.badge ? `<span class="bd">${it.badge}</span>` : ""}<span class="dots"></span><span class="price">${fmt(it.p)}</span></div><div class="en">${it.en}</div><div class="row2"><p class="d" data-det="${k}">${it.d}</p><div class="qty" data-q="${k}">${qtyHtml(k)}</div></div></div>`
+      const options = it.options.filter(option => MEAT_AVAILABLE || !option.label?.includes("لحمة")).map(option => {
+        const itemName = option.label ? `${it.n} - ${option.label}` : it.n;
+        const k = flat.push({ n: itemName, p: option.p, icon: ic(c) }) - 1;
+        return `<div class="option"><span class="option-label">${option.label || "الوجبة"}</span><strong class="price">${fmt(option.p)}</strong><div class="qty" data-q="${k}">${qtyHtml(k)}</div></div>`;
+      }).join("");
+      return `<div class="it"><div class="l1"><strong>${it.n}</strong></div><p class="item-description">${it.d}</p><div class="options">${options}</div></div>`
     }).join("") + `</div>`).join("") + `</div></section>`
 }).join("");
 const go = id => document.getElementById(id).scrollIntoView({ behavior: "smooth" });
@@ -205,7 +235,7 @@ document.addEventListener("change", e => {
   document.querySelectorAll(".type-option").forEach(label => label.classList.toggle("active", label.contains(e.target)));
   persistOrder();
 });
-$("#cats").onclick = () => { mode = "cats"; $("#cats").classList.add("active"); $("#cats").setAttribute("aria-pressed", "true"); sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
+$("#cats").onclick = () => { mode = "cats"; $("#cats").classList.add("active"); $("#cats").setAttribute("aria-pressed", "true"); sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${ACTIVE_MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
 ov.addEventListener("click", e => { if (e.target === ov) closeSheet() });
 addEventListener("keydown", e => { if (e.key === "Escape") closeSheet() });
 /* ===== حركات التمرير ===== */
