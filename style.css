@@ -1,12 +1,12 @@
 :root {
-    --brown: #6A4435;
-    --brown-d: #6A4435;
+    --brown: #6A4A35;
+    --brown-d: #6A4A35;
     --olive: #5D6B3F;
     --beige: #E8DDCB;
     --paper: #E8DDCB;
     --red: #A52A2A;
-    --ink: #6A4435;
-    --line: rgba(106, 68, 53, .22);
+    --ink: #6A4A35;
+    --line: rgba(106, 74, 53, .22);
 
     --pat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 6l6 16 16 6-16 6-6 16-6-16-16-6 16-6z' fill='none' stroke='%23E8DDCB' stroke-opacity='.04' stroke-width='1.2'/%3E%3C/svg%3E");
 }
@@ -16,6 +16,10 @@
     margin: 0
 }
 
+[hidden] {
+    display: none !important
+}
+
 html {
     scroll-behavior: smooth;
     overflow-x: clip
@@ -23,7 +27,8 @@ html {
 
 body {
     font-family: Cairo, Tahoma, sans-serif;
-    background: var(--beige);
+    background-color: var(--beige);
+    background-image: none;
     color: var(--ink);
     overflow-x: clip
 }
@@ -46,9 +51,18 @@ button:focus-visible {
     background: var(--olive) var(--pat);
     color: var(--beige);
     text-align: center;
-    padding: calc(22px + env(safe-area-inset-top, 0px)) 18px 42px;
+    padding: calc(12px + env(safe-area-inset-top, 0px)) 18px 20px;
     position: relative;
     overflow: hidden;
+}
+
+.hero-brand {
+    display: block;
+    width: min(360px, 100%);
+    height: auto;
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
 }
 
 .brand-logo {
@@ -64,9 +78,9 @@ button:focus-visible {
 
 .brand-plaque {
     position: relative;
-    width: min(760px, calc(100vw - 28px));
-    aspect-ratio: 3 / 1;
-    margin: 0 auto 6px;
+    width: min(600px, calc(100vw - 44px));
+    aspect-ratio: 3.5 / 1;
+    margin: 0 auto 2px;
     filter: drop-shadow(0 8px 16px rgba(31, 37, 23, .3));
     isolation: isolate
 }
@@ -119,7 +133,7 @@ button:focus-visible {
     border-radius: 999px 999px 18px 18px;
     outline: 1px solid rgba(232, 221, 203, .25);
     outline-offset: 7px;
-    background: rgba(106, 68, 53, .45)
+    background: rgba(106, 74, 53, .45)
 }
 
 .sprig {
@@ -151,7 +165,7 @@ button:focus-visible {
 .desc {
     font-size: 13px;
     opacity: .75;
-    margin: 18px auto 16px;
+    margin: 10px auto 0;
     max-width: 330px;
     line-height: 1.7
 }
@@ -193,6 +207,12 @@ button:focus-visible {
     margin: auto
 }
 
+#quick[hidden],
+.nav[hidden],
+#cats[hidden] {
+    display: none
+}
+
 .quick::-webkit-scrollbar {
     display: none
 }
@@ -217,7 +237,7 @@ button:focus-visible {
     border: 2px solid var(--brown);
     font-style: normal;
     font-size: 27px;
-    box-shadow: 0 3px 8px rgba(106, 68, 53, .15);
+    box-shadow: 0 3px 8px rgba(106, 74, 53, .15);
     transition: transform .2s, background .2s
 }
 
@@ -238,7 +258,7 @@ button:focus-visible {
     border: 1px solid var(--line);
     border-radius: 99px;
     padding: 6px;
-    box-shadow: 0 8px 20px rgba(106, 68, 53, .15)
+    box-shadow: 0 8px 20px rgba(106, 74, 53, .15)
 }
 
 .pills {
@@ -273,7 +293,7 @@ main {
 }
 
 .cat {
-    padding: 48px 16px 34px;
+    padding: 32px 16px 24px;
     scroll-margin-top: 30px;
     position: relative
 }
@@ -292,7 +312,13 @@ main {
 
 .ch {
     text-align: center;
-    margin-bottom: 22px
+    width: min(100%, 360px);
+    margin: 0 auto 14px;
+    padding: 7px 16px 9px;
+    border: 1px solid rgba(106, 74, 53, .16);
+    border-radius: 12px;
+    background: rgba(255, 252, 246, .9);
+    box-shadow: 0 4px 16px rgba(106, 74, 53, .07)
 }
 
 .ch .ic {
@@ -339,7 +365,7 @@ main {
     font-size: 14px;
     font-weight: 800;
     color: var(--olive);
-    margin: 20px 0 4px;
+    margin: 14px 0 4px;
     display: flex;
     align-items: center;
     gap: 8px
@@ -361,7 +387,7 @@ main {
     gap: 4px 34px
 }
 
-@media(min-width:700px) {
+@media(min-width:600px) {
     .list {
         grid-template-columns: 1fr 1fr
     }
@@ -371,11 +397,11 @@ main {
     display: block;
     width: 100%;
     text-align: right;
-    padding: 14px 14px;
-    border: 1px solid rgba(106, 68, 53, .12);
+    padding: 10px 12px;
+    border: 1px solid rgba(106, 74, 53, .12);
     border-radius: 8px;
-    background: rgba(232, 221, 203, .46);
-    box-shadow: 0 3px 12px rgba(106, 68, 53, .08);
+    background: rgba(255, 252, 246, .9);
+    box-shadow: 0 3px 12px rgba(106, 74, 53, .08);
     opacity: 0;
     transform: translateY(14px);
     transition: opacity .5s, transform .5s, background .2s, border-color .2s, box-shadow .2s
@@ -389,7 +415,7 @@ main {
 .it:hover {
     background: rgba(232, 221, 203, .88);
     border-color: rgba(93, 107, 63, .4);
-    box-shadow: 0 6px 16px rgba(106, 68, 53, .1)
+    box-shadow: 0 6px 16px rgba(106, 74, 53, .1)
 }
 
 .l1 {
@@ -402,6 +428,36 @@ main {
     font-size: 17px;
     font-weight: 800;
     color: inherit
+}
+
+.item-description {
+    margin-top: 1px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    opacity: .78
+}
+
+.options {
+    margin-top: 5px
+}
+
+.option {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    border-top: 1px solid var(--line)
+}
+
+.option-label {
+    font-size: 13px;
+    font-weight: 700;
+    opacity: .82
+}
+
+.option .price {
+    font-size: 14px
 }
 
 .dots {
@@ -455,7 +511,7 @@ main {
 .ov {
     position: fixed;
     inset: 0;
-    background: rgba(106, 68, 53, .72);
+    background: rgba(106, 74, 53, .72);
     opacity: 0;
     pointer-events: none;
     transition: opacity .25s;
@@ -580,56 +636,6 @@ footer small {
     margin-top: 6px
 }
 
-.dock {
-    position: fixed;
-    z-index: 30;
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 2px;
-    background: var(--brown);
-    padding: 6px;
-    border-radius: 99px;
-    box-shadow: 0 8px 22px rgba(106, 68, 53, .35)
-}
-
-.dock button {
-    color: var(--beige);
-    padding: 8px 18px;
-    border-radius: 99px;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.2;
-    transition: background .2s
-}
-
-.dock button:hover {
-    background: rgba(93, 107, 63, .7)
-}
-
-.dock button.active,
-.dock button:active {
-    background: var(--red);
-    color: var(--beige)
-}
-
-.dock span {
-    font-size: 17px
-}
-
-@media(min-width:768px) {
-    .logo {
-        font-size: 72px
-    }
-
-    .arch {
-        width: 360px
-    }
-}
 
 @media(prefers-reduced-motion:reduce) {
     * {
@@ -696,10 +702,10 @@ footer small {
 }
 
 .grill {
-    width: 90px;
-    margin: 4px auto 0;
+    width: 64px;
+    margin: 0 auto;
     display: block;
-    filter: drop-shadow(0 6px 10px rgba(106, 68, 53, .35))
+    filter: drop-shadow(0 6px 10px rgba(106, 74, 53, .35))
 }
 
 .belt {
@@ -902,7 +908,7 @@ footer small {
     justify-content: space-between;
     align-items: center;
     font-weight: 800;
-    box-shadow: 0 8px 22px rgba(106, 68, 53, .35)
+    box-shadow: 0 8px 22px rgba(106, 74, 53, .35)
 }
 
 .cartbar.show {
@@ -1083,8 +1089,20 @@ footer small {
 }
 
 .hero {
-    background: var(--olive) url("assets/%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%AE%D8%B6%D8%B1%D8%A7%D8%A1%20%D8%A3%D8%B1%D8%A7%D8%A8%D9%8A%D8%B3%D9%83%D9%8A%D8%A9%20%D8%A8%D8%B2%D8%AE%D8%A7%D8%B1%D9%81%20%D8%B2%D9%8A%D8%AA%D9%88%D9%86%D9%8A%D8%A9.png") center / cover no-repeat;
-    color: var(--beige)
+    isolation: isolate;
+    background: var(--beige);
+    color: var(--brown)
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("assets/1.jpeg") center top / 100% 165px repeat-y;
+    opacity: .14;
+    mask-image: linear-gradient(90deg, #000, transparent 30%, transparent 70%, #000);
+    pointer-events: none
 }
 
 .arch {
@@ -1095,7 +1113,7 @@ footer small {
     outline-offset: 8px;
     width: min(310px, 84%);
     padding: 56px 18px 26px;
-    box-shadow: 0 0 36px rgba(106, 68, 53, .12)
+    box-shadow: 0 0 36px rgba(106, 74, 53, .12)
 }
 
 .sprig {
@@ -1241,7 +1259,7 @@ svg.i {
 .cat:nth-child(even) .it:hover {
     background: rgba(232, 221, 203, .15);
     border-color: rgba(232, 221, 203, .34);
-    box-shadow: 0 6px 16px rgba(106, 68, 53, .18)
+    box-shadow: 0 6px 16px rgba(106, 74, 53, .18)
 }
 
 .emo {
@@ -1281,7 +1299,7 @@ svg.i {
     overflow: hidden;
     outline: 2px solid var(--olive);
     outline-offset: 8px;
-    box-shadow: 0 12px 30px rgba(106, 68, 53, .3)
+    box-shadow: 0 12px 30px rgba(106, 74, 53, .3)
 }
 
 .frame img {
@@ -1417,13 +1435,6 @@ svg.i {
 }
 
 @media(max-width:600px) {
-    .hero {
-        background-image: linear-gradient(to bottom, rgba(61, 72, 43, 0) 0%, rgba(61, 72, 43, .06) 32%, rgba(35, 44, 27, .18) 44%, rgba(35, 44, 27, .3) 49%, rgba(35, 44, 27, .38) 100%), url("assets/%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%AE%D8%B6%D8%B1%D8%A7%D8%A1%20%D8%A3%D8%B1%D8%A7%D8%A8%D9%8A%D8%B3%D9%83%D9%8A%D8%A9%20%D8%A8%D8%B2%D8%AE%D8%A7%D8%B1%D9%81%20%D8%B2%D9%8A%D8%AA%D9%88%D9%86%D9%8A%D8%A9.png"), var(--leaf);
-        background-size: 100% 100%, 100% 100%, 64px 64px;
-        background-position: center, center top, center;
-        background-repeat: no-repeat, no-repeat, repeat;
-    }
-
     .visit-in {
         grid-template-columns: 1fr;
         gap: 20px
