@@ -337,6 +337,23 @@ main {
     color: var(--beige)
 }
 
+#rice .ch h2,
+#extras .ch h2 {
+    color: var(--red)
+}
+
+#rice .ch .ic,
+#extras .ch .ic {
+    color: var(--red)
+}
+
+#rice .item-description,
+#extras .item-description {
+    color: #FFF8E8;
+    font-weight: 700;
+    opacity: 1
+}
+
 .orn {
     display: flex;
     align-items: center;
