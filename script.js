@@ -144,7 +144,8 @@ const MENU = [
   }
 ];
 /* ===== الإعدادات ===== */
-const WA_NUMBER = "+201282985878"; // رقم واتساب المطعم بالصيغة الدولية بدون + أو أصفار، مثال: "201001234567"
+const WA_NUMBER = "+201043840081";
+const RESTAURANT_PHONE_DISPLAY = "0104 3840081";
 const CART_STORAGE_KEY = "tabaria-order-v3";
 const DELIVERY_FEE = 30;
 const RESTAURANT_ADDRESS = "44 عمر لطفي، محطة ترام كامب شيزار";
@@ -175,7 +176,7 @@ $("#visitAddress").textContent = RESTAURANT_ADDRESS;
 $("#visitHours").textContent = RESTAURANT_HOURS;
 $("#visitMap").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(RESTAURANT_ADDRESS)}`;
 $("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
-$("#visitPhoneNumber").textContent = `+${RESTAURANT_PHONE}`;
+$("#visitPhoneNumber").textContent = RESTAURANT_PHONE_DISPLAY;
 $("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
 const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
 $("#quick").innerHTML = ACTIVE_MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
