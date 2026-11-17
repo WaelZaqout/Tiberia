@@ -1491,3 +1491,69 @@ footer .logo-en {
     color: var(--beige);
     margin: 8px 0
 }
+
+.ch h2,
+.cat:nth-child(even) .ch h2 {
+    font-family: Cairo, Tahoma, sans-serif;
+    font-size: clamp(1.75rem, 5vw, 2rem);
+    font-weight: 900;
+    line-height: 1.45;
+    color: var(--brown)
+}
+
+.ch .orn,
+.cat:nth-child(even) .ch .orn {
+    color: var(--olive);
+    font-size: 14px;
+    font-weight: 800
+}
+
+.grp {
+    font-size: 15px;
+    line-height: 1.7
+}
+
+.l1 strong {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.5
+}
+
+.item-description,
+#rice .item-description,
+#extras .item-description {
+    color: var(--brown-d);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.75;
+    opacity: 1
+}
+
+.cat:nth-child(even) .item-description {
+    color: var(--beige)
+}
+
+.option-label {
+    font-size: 14px;
+    opacity: 1
+}
+
+.desc {
+    font-size: 15px;
+    line-height: 1.7;
+    opacity: 1
+}
+
+.about h2,
+.visit h2 {
+    font-family: Cairo, Tahoma, sans-serif;
+    font-weight: 900;
+    line-height: 1.5
+}
+
+.about p,
+.visit p {
+    font-size: 15px;
+    line-height: 1.85;
+    opacity: 1
+}
