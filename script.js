@@ -70,19 +70,19 @@ const MENU = [
         { n: "نصف دجاجة مشوية", en: "Half Grilled Chicken", d: "نصف دجاجة بتتبيلة الشام الخاصة.", p: 140 },
         { n: "ربع دجاجة مشوية", en: "Quarter Grilled Chicken", d: "ربع دجاجة ذهبية مع ثومية.", p: 80 },
         { n: "وجبة فراخ مشوية", en: "Grilled Chicken Meal", d: "مع أرز أو بطاطا وسلطة وخبز.", p: 150 },
-        { n: "نصف فرخة مع أي نوع رز", d: "نصف فرخة مع اختيار أي نوع من الأرز.", p: 275 },
-        { n: "ربع فرخة ورك مع أي نوع رز", d: "ربع فرخة ورك مع اختيار أي نوع من الأرز.", p: 165 },
-        { n: "ربع فرخة صدر مع أي نوع رز", d: "ربع فرخة صدر مع اختيار أي نوع من الأرز.", p: 185 }]
+        { n: "ربع فرخة ورك", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 165 },
+        { n: "ربع فرخة صدر", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 185 },
+        { n: "نصف فرخة", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 275 }]
     }]
   },
   {
     id: "rice", name: "قسم الشرقي", icon: "🍚", groups: [{
       items: [
         { n: "كبسة دجاج", en: "Chicken Kabsa", d: "أرز بهارات الكبسة مع دجاج طري ومكسرات.", p: 135 },
-        { n: "قدرة", en: "Chicken Qidreh", d: "أرز بالحمص والسمن البلدي مع الدجاج.", p: 140, badge: "تراثي" },
-        { n: "مقلوبة", en: "Chicken Maqluba", d: "أرز وخضار مقلوبة مع دجاج وبهارات شامية.", p: 140 },
-        { n: "كبسة", d: "كبسة تُحضّر طازجة عند الطلب.", p: 180 },
-        { n: "مندي", d: "مندي يُحضّر طازجًا عند الطلب.", p: 200 },
+        { n: "قدرة", en: "Chicken Qidreh", d: "أرز بالحمص والسمن البلدي مع الدجاج.", p: 140, badge: "تراثي", options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
+        { n: "مقلوبة", en: "Chicken Maqluba", d: "أرز وخضار مقلوبة مع دجاج وبهارات شامية.", p: 140, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
+        { n: "كبسة", d: "كبسة تُحضّر طازجة عند الطلب.", p: 180, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
+        { n: "مندي", d: "مندي يُحضّر طازجًا عند الطلب.", p: 200, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
         { n: "فريكة", d: "فريكة تُحضّر طازجة عند الطلب.", p: 170 },
         { n: "مقلية", d: "طبق مقلية يُحضّر طازجًا عند الطلب.", p: 150 },
         { n: "مشكل", d: "طبق مشكل يُحضّر طازجًا عند الطلب.", p: 220 },
@@ -146,7 +146,7 @@ const MENU = [
 /* ===== الإعدادات ===== */
 const WA_NUMBER = "+201043840081";
 const RESTAURANT_PHONE_DISPLAY = "0104 3840081";
-const CART_STORAGE_KEY = "tabaria-order-v3";
+const CART_STORAGE_KEY = "tabaria-order-v5";
 const DELIVERY_FEE = 30;
 const RESTAURANT_ADDRESS = "44 عمر لطفي، محطة ترام كامب شيزار";
 const RESTAURANT_HOURS = "من 8:00 صباحًا إلى 2:00 بعد منتصف الليل";
@@ -157,7 +157,7 @@ const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ "&
 const MEAT_AVAILABLE = false;
 const ACTIVE_ITEMS = {
   shawarma: ["فرشوحة شاورما", "صفيحة شاورما", "فتة شاورما", "شاورما سوري", "شاورما عربي"],
-  grill: ["نصف فرخة مع أي نوع رز", "ربع فرخة ورك مع أي نوع رز", "ربع فرخة صدر مع أي نوع رز"],
+  grill: ["ربع فرخة ورك", "ربع فرخة صدر", "نصف فرخة"],
   rice: ["كبسة", "مندي", "قدرة", "مقلوبة"],
   western: ["فاهيتا"],
   extras: ["سلطات", "تومية", "طحينة"]
@@ -188,8 +188,9 @@ $("#menu").innerHTML = ACTIVE_MENU.map(c => {
     c.groups.map(g => (g.title ? `<div class="grp">${g.title}</div>` : "") + `<div class="list">` + g.items.map(it => {
       const options = (it.options || [{ p: it.p }]).filter(option => MEAT_AVAILABLE || !option.label?.includes("لحمة")).map(option => {
         const itemName = option.label ? `${it.n} - ${option.label}` : it.n;
-        const k = flat.push({ n: itemName, p: option.p, icon: ic(c) }) - 1;
-        return `<div class="option"><span class="option-label">${option.label || "الوجبة"}</span><strong class="price">${fmt(option.p)}</strong><div class="qty" data-q="${k}">${qtyHtml(k)}</div></div>`;
+        const price = option.add === undefined ? option.p : it.p + option.add;
+        const k = flat.push({ n: itemName, p: price, icon: ic(c) }) - 1;
+        return `<div class="option"><span class="option-label">${option.label || "الوجبة"}</span><strong class="price">${fmt(price)}</strong><div class="qty" data-q="${k}">${qtyHtml(k)}</div></div>`;
       }).join("");
       return `<div class="it"><div class="l1"><strong>${it.n}</strong></div><p class="item-description">${it.d}</p><div class="options">${options}</div></div>`
     }).join("") + `</div>`).join("") + `</div></section>`
