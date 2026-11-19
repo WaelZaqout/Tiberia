@@ -1,324 +1,185 @@
-/* ===== بيانات المنيو — الأقسام غير النشطة محفوظة ويمكن إعادتها لاحقًا ===== */
-const MENU = [
-  {
-    id: "shawarma", name: "قسم الشاورما", icon: "🌯", groups: [
-      {
-        title: "الشاورما", items: [
-          { n: "شاورما بيتا مندي", d: "شاورما متبّلة بنكهة المندي داخل خبز بيتا.", options: [{ label: "فراخ", p: 85 }, { label: "لحمة", p: 140 }] },
-          { n: "شاورما فرشوحة مندي", d: "شاورما بنكهة المندي داخل خبز فرشوحة.", options: [{ label: "فراخ", p: 120 }, { label: "لحمة", p: 210 }] },
-          { n: "وجبة الحريف", d: "وجبة شاورما مميزة بطعم غني ومُرضٍ.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
-          { n: "كايزر", d: "ساندويتش شاورما يُقدّم في خبز كايزر.", options: [{ label: "فراخ", p: 65 }, { label: "لحمة", p: 90 }] },
-          { n: "فتة شاورما", d: "طبقات من الأرز والخبز المقلي، مغطاة بصوص الثومية وقطع الشاورما.", options: [{ label: "L", p: 140 }] }]
-      },
-      {
-        title: "شاورما وزن", items: [
-          { n: "ربع كيلو", d: "شاورما فراخ بوزن ربع كيلو، تُحضّر طازجة عند الطلب.", options: [{ label: "فراخ", p: 200 }, { label: "لحمة", p: 350 }] },
-          { n: "نصف كيلو", d: "شاورما فراخ بوزن نصف كيلو، مناسبة للمشاركة.", options: [{ label: "فراخ", p: 400 }, { label: "لحمة", p: 700 }] },
-          { n: "كيلو", d: "كيلو كامل من شاورما الفراخ.", options: [{ label: "فراخ", p: 800 }, { label: "لحمة", p: 1400 }] }]
-      },
-      {
-        title: "شاورما مكس", items: [
-          { n: "مكس فرشوحة", d: "مزيج شاورما يُقدّم في خبز فرشوحة.", options: [{ p: 150 }] },
-          { n: "مكس فرشوحة دبل", d: "حصة دبل من مكس الشاورما داخل خبز فرشوحة.", options: [{ p: 180 }] },
-          { n: "مكس سوري", d: "مزيج شاورما بتقديم على الطريقة السورية.", options: [{ p: 200 }] },
-          { n: "مكس عربي بالجبنة", d: "مكس شاورما عربي مع الجبنة.", options: [{ p: 220 }] },
-          { n: "مكس عربي عادي", d: "مكس شاورما بتقديم عربي كلاسيكي.", options: [{ p: 200 }] },
-          { n: "مكس بيتا", d: "مكس شاورما يُقدّم داخل خبز بيتا.", options: [{ p: 95 }] },
-          { n: "فتة مكس", d: "فتة تجمع بين الخبز ومكس الشاورما.", options: [{ p: 200 }] }]
-      },
-      {
-        title: "الوجبات", items: [
-          { n: "فرشوحة شاورما", d: "ساندوتش شاورما بخبز الطابون، يُقدّم مع اختيارك من صوص الطحينة أو الثومية.", options: [{ label: "حجم واحد", p: 135 }] },
-          { n: "صاج جبنة وزيتون", d: "شاورما ملفوفة بخبز الصاج مع الجبنة والزيتون.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
-          { n: "وجبة سوري", d: "وجبة شاورما بتقديم سوري.", options: [{ label: "فراخ", p: 150 }, { label: "لحمة", p: 250 }] },
-          { n: "وجبة العربي", d: "وجبة شاورما عربي مكوّنة من 6 أو 12 قطعة.", options: [{ label: "6 قطع", p: 165 }, { label: "12 قطعة", p: 225 }] },
-          { n: "وجبة عربي ملوكي", d: "وجبة عربي بتقديم ملوكي مميز.", options: [{ label: "فراخ", p: 170 }, { label: "لحمة", p: 260 }] },
-          { n: "وجبة الأناناس", d: "وجبة شاورما مع لمسة أناناس لمذاق مميز.", options: [{ label: "فراخ", p: 175 }, { label: "لحمة", p: 230 }] },
-          { n: "فرنسـاوي", d: "ساندويتش شاورما فرنسـاوي بطعم غني.", options: [{ label: "فراخ", p: 95 }, { label: "لحمة", p: 200 }] },
-          { n: "شاورما بيتا", d: "شاورما تُقدّم في خبز بيتا.", p: 75 },
-          { n: "بيتا الناشف", d: "شاورما داخل خبز بيتا بتحضير ناشف ومقرمش.", options: [{ label: "فراخ", p: 85 }, { label: "لحمة", p: 140 }] },
-          { n: "شاورما دجاج سنجل", d: "شاورما دجاج بحجم سنجل.", p: 80 },
-          { n: "شاورما دجاج دبل", d: "شاورما دجاج بحجم دبل.", p: 120 },
-          { n: "صفيحة شاورما", d: "ساندوتش محشو بالشاورما، مع جبنة الموزاريلا والزيتون.", p: 190 },
-          { n: "شاورما سوري", d: "ساندوتش شاورما بخبز الصاج السوري، يُقدّم مع صوص الثومية.", p: 130 },
-          { n: "شاورما عربي (6 قطع)", d: "شاورما عربي مكوّنة من 6 قطع.", p: 150 },
-          { n: "شاورما عربي (12 قطعة)", d: "شاورما عربي مكوّنة من 12 قطعة.", p: 230 },
-          { n: "شاورما عربي", d: "شاورما عربي باختيار 6 أو 12 قطعة.", options: [{ label: "6 قطع", p: 150 }, { label: "12 قطعة", p: 230 }] },
-          { n: "شاورما بيتزا", d: "بيتزا بنكهة الشاورما.", p: 180 }]
-      }]
-  },
-  {
-    id: "western", name: "قسم الغربي والشواية", icon: "🍕", groups: [{
-      items: [
-        { n: "زِتّي بالدجاج", en: "Chicken Ziti", d: "معكرونة زِتّي بالدجاج والصلصة الكريمية والجبن.", p: 130 },
-        { n: "تشيكن بيتزا (فرنسي)", en: "Chicken Pizza", d: "عجينة طازجة، دجاج متبّل وجبنة موتزاريلا.", p: 140 },
-        { n: "تشيكن جبنة بالذرة", en: "Chicken Cheese & Corn", d: "دجاج مقرمش مع جبنة ذائبة وذرة حلوة.", p: 125 },
-        { n: "تشيكن باستا", en: "Chicken Pasta", d: "باستا بصوص الكريمة مع قطع الدجاج.", p: 120 },
-        { n: "تشيكن ميكس", en: "Chicken Mix", d: "تشكيلة دجاج مشوي ومقرمش مع إضافات.", p: 135 },
-        { n: "غربي + شرقي", d: "تشكيلة تجمع بين الأكلات الغربية والشرقية.", p: 180 },
-        { n: "فاهيتا", d: "فاهيتا بخبز سوري.", options: [{ label: "سوري", p: 120 }] },
-        { n: "تشكيلة بيتزا (فرن)", d: "تشكيلة بيتزا محضّرة في الفرن.", p: 250 },
-        { n: "فطائر (فرن)", d: "فطائر محضّرة في الفرن.", p: 120 },
-        { n: "ملكية", d: "طبق مالكية يُحضّر طازجًا عند الطلب.", p: 180 },
-        { n: "كلزوني", d: "كالزوني محضّر طازجًا عند الطلب.", p: 200 }]
-    }]
-  },
-  {
-    id: "grill", name: "الفراخ المشوية", icon: "🍗", groups: [{
-      items: [
-        { n: "فراخ مشوية", en: "Grilled Chicken", d: "دجاجة كاملة متبّلة مشوية على الفحم.", p: 260 },
-        { n: "نصف دجاجة مشوية", en: "Half Grilled Chicken", d: "نصف دجاجة بتتبيلة الشام الخاصة.", p: 140 },
-        { n: "ربع دجاجة مشوية", en: "Quarter Grilled Chicken", d: "ربع دجاجة ذهبية مع ثومية.", p: 80 },
-        { n: "وجبة فراخ مشوية", en: "Grilled Chicken Meal", d: "مع أرز أو بطاطا وسلطة وخبز.", p: 150 },
-        { n: "ربع فرخة ورك", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 165 },
-        { n: "ربع فرخة صدر", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 185 },
-        { n: "نصف فرخة", d: "تُقدّم مع أرز مبهر وبطاطس ومخلل وتومية.", p: 275 }]
-    }]
-  },
-  {
-    id: "rice", name: "قسم الشرقي", icon: "🍚", groups: [{
-      items: [
-        { n: "كبسة دجاج", en: "Chicken Kabsa", d: "أرز بهارات الكبسة مع دجاج طري ومكسرات.", p: 135 },
-        { n: "قدرة", en: "Chicken Qidreh", d: "أرز بالحمص والسمن البلدي مع الدجاج.", p: 140, badge: "تراثي", options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
-        { n: "مقلوبة", en: "Chicken Maqluba", d: "أرز وخضار مقلوبة مع دجاج وبهارات شامية.", p: 140, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
-        { n: "كبسة", d: "كبسة تُحضّر طازجة عند الطلب.", p: 180, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
-        { n: "مندي", d: "مندي يُحضّر طازجًا عند الطلب.", p: 200, options: [{ label: "نصف فرخة", p: 275 }, { label: "ربع فرخة ورك", p: 165 }, { label: "ربع فرخة صدر", p: 185 }] },
-        { n: "فريكة", d: "فريكة تُحضّر طازجة عند الطلب.", p: 170 },
-        { n: "مقلية", d: "طبق مقلية يُحضّر طازجًا عند الطلب.", p: 150 },
-        { n: "مشكل", d: "طبق مشكل يُحضّر طازجًا عند الطلب.", p: 220 },
-        { n: "منسف", d: "منسف يُحضّر طازجًا عند الطلب.", p: 220 },
-        { n: "أوزي", d: "أوزي يُحضّر طازجًا عند الطلب.", p: 220 }]
-    }]
-  },
-  {
-    id: "starters", name: "المقبلات", icon: "🥙", groups: [{
-      items: [
-        { n: "حمص", en: "Hummus", d: "حمص بالطحينة وزيت الزيتون.", p: 40 },
-        { n: "متبل", en: "Mutabal", d: "باذنجان مشوي بالطحينة والثوم.", p: 45 },
-        { n: "فتة", en: "Fatteh", d: "خبز مقرمش وحمص ولبن وسمن.", p: 60 },
-        { n: "فلافل", en: "Falafel", d: "أقراص فلافل مقرمشة مع طحينة.", p: 35 },
-        { n: "فول", en: "Foul", d: "فول مدمّس بزيت الزيتون والليمون.", p: 30 },
-        { n: "سلطة عربية", en: "Arabic Salad", d: "خيار وطماطم وبقدونس بالليمون.", p: 30 },
-        { n: "سلطة ذرة مايونيز", d: "سلطة ذرة بالمايونيز.", options: [{ label: "كبير", p: 45 }, { label: "وسط", p: 30 }] },
-        { n: "سلطة تركي سبايسي", d: "سلطة تركية بنكهة سبايسي.", options: [{ label: "كبير", p: 30 }, { label: "وسط", p: 20 }] },
-        { n: "ملفوف بالمايونيز", d: "ملفوف بالمايونيز.", options: [{ label: "كبير", p: 40 }, { label: "وسط", p: 20 }] },
-        { n: "خيار باللبن", d: "خيار باللبن.", options: [{ label: "كبير", p: 45 }, { label: "وسط", p: 30 }] },
-        { n: "سلطة خضار", d: "سلطة خضار طازجة.", options: [{ label: "كبير", p: 40 }, { label: "وسط", p: 20 }] },
-        { n: "زبادي", d: "زبادي.", p: 20 },
-        { n: "حمص مسبحة", d: "حمص مسبحة.", p: 60 },
-        { n: "سلطة فتوش", d: "سلطة فتوش.", p: 50 },
-        { n: "كبة باللحم بالقطعة", d: "كبة باللحم، السعر للقطعة.", p: 35 },
-        { n: "سمبوسك باللحم بالقطعة", d: "سمبوسك باللحم، السعر للقطعة.", p: 20 },
-        { n: "شوربة خضار", d: "شوربة خضار.", p: 60 },
-        { n: "بطاطس", d: "بطاطس.", p: 25 },
-        { n: "ورق عنب بالقطعة", d: "ورق عنب، السعر للقطعة.", p: 8 },
-        { n: "مسخن رول", d: "رول مسخن.", p: 25 },
-        { n: "حمص باللحمة", d: "حمص باللحمة.", p: 160 }]
-    }]
-  },
-  {
-    id: "extras", name: "الإضافات", icon: "🍟", groups: [{
-      items: [
-        { n: "بطاطا", en: "Fries", d: "بطاطا مقلية مقرمشة.", p: 35 },
-        { n: "تومية", en: "Garlic Sauce", d: "صوص الثوم الشامي.", p: 30 },
-        { n: "سلطات", d: "سلطات طازجة.", p: 30 },
-        { n: "طحينة", d: "طحينة.", p: 10 },
-        { n: "مخلل", en: "Pickles", d: "تشكيلة مخللات.", p: 10 },
-        { n: "صوص حار", en: "Hot Sauce", d: "صوص حار بنكهة الفلفل.", p: 10 },
-        { n: "خبز", en: "Bread", d: "خبز عربي ساخن.", p: 8 }]
-    }]
-  },
-  {
-    id: "drinks", name: "المشروبات", icon: "🥤", groups: [{
-      items: [
-        { n: "مشروبات غازية", en: "Soft Drinks", d: "مشروبات غازية باردة.", p: 20 },
-        { n: "مياه", en: "Water", d: "مياه معدنية.", p: 10 },
-        { n: "عصائر", en: "Juices", d: "عصائر طازجة حسب الموسم.", p: 40 },
-        { n: "ماء صغير", d: "ماء صغير.", p: 10 },
-        { n: "لبن عيران", d: "لبن عيران.", p: 30 },
-        { n: "لبن رايب", d: "لبن رايب.", p: 25 },
-        { n: "V cola", d: "مشروب V cola.", p: 25 },
-        { n: "قهوة فلسطينية", d: "قهوة فلسطينية.", p: 45 },
-        { n: "شاي", d: "شاي.", p: 20 }]
-    }]
-  }
-];
-/* ===== الإعدادات ===== */
-const WA_NUMBER = "+201043840081";
-const RESTAURANT_PHONE_DISPLAY = "0104 3840081";
-const CART_STORAGE_KEY = "tabaria-order-v5";
-const DELIVERY_FEE = 30;
-const RESTAURANT_ADDRESS = "كامب شيزار، 44 عمر لطفي على الترام";
-const RESTAURANT_MAP_URL = "https://maps.app.goo.gl/5hCUPjZ3pWWwyEV86";
-const RESTAURANT_HOURS = "من 8:00 صباحًا إلى 2:00 بعد منتصف الليل";
-const RESTAURANT_PHONE = WA_NUMBER.replace(/\D/g, "");
-const waLink = message => `https://wa.me/${WA_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
-const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-/* ===== الواجهة ===== */
-const MEAT_AVAILABLE = false;
-const ACTIVE_ITEMS = {
-  shawarma: ["فرشوحة شاورما", "صفيحة شاورما", "فتة شاورما", "شاورما سوري", "وجبة العربي"],
-  grill: ["ربع فرخة ورك", "ربع فرخة صدر", "نصف فرخة"],
-  rice: ["كبسة", "مندي", "قدرة", "مقلوبة"],
-  western: ["فاهيتا"],
-  extras: ["سلطات", "تومية", "طحينة"]
-};
-const ACTIVE_MENU = Object.entries(ACTIVE_ITEMS).map(([id, names]) => {
-  const category = MENU.find(item => item.id === id);
-  const itemsByName = new Map(category.groups.flatMap(group => group.items).map(item => [item.n, item]));
-  const items = names.map(name => itemsByName.get(name));
-  if (items.some(item => !item)) throw new Error(`Missing active menu item for ${id}`);
-  return { ...category, groups: [{ items }] };
-});
-const $ = s => document.querySelector(s), flat = [], cart = {};
-const fmt = p => p + " EGP";
-let mode = "", tbl = "", note = "", orderType = "delivery";
-$("#visitAddress").textContent = RESTAURANT_ADDRESS;
-$("#visitHours").textContent = RESTAURANT_HOURS;
-$("#visitMap").href = RESTAURANT_MAP_URL;
-$("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
-$("#visitPhoneNumber").textContent = RESTAURANT_PHONE_DISPLAY;
-$("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
-const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
-$("#quick").innerHTML = ACTIVE_MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
-$("#pills").innerHTML = ACTIVE_MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
-const qtyHtml = k => cart[k] ? `<button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button>` : `<button class="q add" data-add="${k}">+ أضف</button>`;
-$("#menu").innerHTML = ACTIVE_MENU.map(c => {
-  const total = c.groups.reduce((a, g) => a + g.items.length, 0);
-  return `<section class="cat" id="${c.id}"><div class="in"><div class="ch"><span class="ic">${ic(c)}</span><h2>${c.name}</h2><div class="orn">${total} صنف</div></div>` +
-    c.groups.map(g => (g.title ? `<div class="grp">${g.title}</div>` : "") + `<div class="list">` + g.items.map(it => {
-      const options = (it.options || [{ p: it.p }]).filter(option => MEAT_AVAILABLE || !option.label?.includes("لحمة")).map(option => {
-        const itemName = option.label ? `${it.n} - ${option.label}` : it.n;
-        const price = option.add === undefined ? option.p : it.p + option.add;
-        const k = flat.push({ n: itemName, p: price, icon: ic(c) }) - 1;
-        return `<div class="option"><span class="option-label">${option.label || "الوجبة"}</span><strong class="price">${fmt(price)}</strong><div class="qty" data-q="${k}">${qtyHtml(k)}</div></div>`;
-      }).join("");
-      return `<div class="it"><div class="l1"><strong>${it.n}</strong></div><p class="item-description">${it.d}</p><div class="options">${options}</div></div>`
-    }).join("") + `</div>`).join("") + `</div></section>`
-}).join("");
-const go = id => document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-const ov = $("#ov"), sh = $("#sheet");
-const closeSheet = () => {
-  ov.classList.remove("show");
-  if (mode === "cats") { $("#cats").classList.remove("active"); $("#cats").setAttribute("aria-pressed", "false") }
-  mode = "";
-};
-/* ===== الطلب ===== */
-const count = () => Object.values(cart).reduce((a, b) => a + b, 0);
-const sum = () => Object.entries(cart).reduce((a, [k, q]) => a + flat[k].p * q, 0);
-const total = () => count() ? sum() + (orderType === "delivery" ? DELIVERY_FEE : 0) : 0;
-function persistOrder() {
-  try {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ cart, orderType, tbl, note }));
-  } catch { }
-}
-function restoreOrder() {
-  let saved;
-  try {
-    saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "null");
-  } catch { return }
-  if (!saved || typeof saved !== "object") return;
-  orderType = saved.orderType === "pickup" ? "pickup" : "delivery";
-  tbl = typeof saved.tbl === "string" ? saved.tbl : "";
-  note = typeof saved.note === "string" ? saved.note : "";
-  if (saved.cart && typeof saved.cart === "object" && !Array.isArray(saved.cart)) {
-    Object.entries(saved.cart).forEach(([key, quantity]) => {
-      const index = Number(key);
-      if (Number.isInteger(index) && index >= 0 && index < flat.length && Number.isSafeInteger(quantity) && quantity > 0) cart[index] = quantity;
-    });
-  }
-  Object.keys(cart).forEach(key => {
-    const item = document.querySelector(`[data-q="${key}"]`);
-    if (item) item.innerHTML = qtyHtml(key);
-  });
-  $("#cn").textContent = `🛒 ${count()} وجبة`;
-  $("#ct").textContent = fmt(total());
-  $("#cartbar").classList.toggle("show", count() > 0);
-}
-restoreOrder();
-function update(k, d) {
-  cart[k] = (cart[k] || 0) + d; if (cart[k] <= 0) delete cart[k];
-  persistOrder();
-  const el = document.querySelector(`[data-q="${k}"]`); el.innerHTML = qtyHtml(k);
-  const b = el.querySelector("b"); if (b) b.classList.add("bump");
-  const bar = $("#cartbar"); bar.classList.toggle("show", count() > 0);
-  $("#cn").textContent = `🛒 ${count()} وجبة`; $("#ct").textContent = fmt(total());
-  bar.classList.remove("pulse"); void bar.offsetWidth; bar.classList.add("pulse");
-  if (mode === "cart") openCart();
-}
-function openCart() {
-  mode = "cart";
-  const ks = Object.keys(cart);
-  if (!ks.length) { closeSheet(); return }
-  const deliveryMessage = orderType === "delivery" ? `رسوم التوصيل: ${fmt(DELIVERY_FEE)}` : "لا توجد رسوم توصيل على الاستلام.";
-  sh.innerHTML = `<div class="grab"></div><h3>طلبك</h3>` + ks.map(k => `<div class="ln"><span>${flat[k].n}</span><div class="qty"><button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button></div><em>${fmt(flat[k].p * cart[k])}</em></div>`).join("") +
-    `<fieldset class="order-type"><legend>نوع الطلب</legend><label class="type-option${orderType === "delivery" ? " active" : ""}"><input type="radio" name="orderType" value="delivery"${orderType === "delivery" ? " checked" : ""}>توصيل</label><label class="type-option${orderType === "pickup" ? " active" : ""}"><input type="radio" name="orderType" value="pickup"${orderType === "pickup" ? " checked" : ""}>استلام من المطعم</label></fieldset>` +
-    `<div class="address-field" id="addressField"${orderType === "pickup" ? " hidden" : ""}><label for="tbl">عنوان التوصيل <span>*</span></label><input class="fld" id="tbl" placeholder="الحي – الشارع – رقم المنزل" value="${escapeHTML(tbl)}" required></div><textarea class="fld" id="note" rows="2" placeholder="ملاحظات (اختياري)">${escapeHTML(note)}</textarea><div class="order-summary"><div class="tot"><span>إجمالي الأصناف</span><b>${fmt(sum())}</b></div><p id="deliveryNote">${deliveryMessage}</p><div class="tot final-total"><span>الإجمالي</span><b id="grandTotal">${fmt(total())}</b></div></div><button class="btn wa" id="send">إرسال الطلب عبر واتساب</button><button class="btn" id="close">متابعة التسوق</button>`;
-  ov.classList.add("show");
-}
-function send() {
-  tbl = $("#tbl")?.value || ""; note = $("#note").value;
-  if (orderType === "delivery" && !tbl.trim()) { $("#tbl").reportValidity(); return }
-  let t = "طلب جديد من منيو طبريا 🌿\n";
-  t += `نوع الطلب: ${orderType === "delivery" ? "توصيل" : "استلام من المطعم"}\n`;
-  if (orderType === "delivery") t += `عنوان التوصيل: ${tbl.trim()}\nرسوم التوصيل: ${fmt(DELIVERY_FEE)}\n`;
-  else t += "رسوم التوصيل: لا توجد\n";
-  t += "\n" + Object.entries(cart).map(([k, q]) => `• ${q} × ${flat[k].n} — ${fmt(flat[k].p * q)}`).join("\n") + `\n\nإجمالي الأصناف: ${fmt(sum())}\nالإجمالي: ${fmt(total())}`;
-  if (note.trim()) t += `\nملاحظات: ${note.trim()}`;
-  window.open(waLink(t), "_blank");
-}
-document.addEventListener("click", e => {
-  const t = e.target.closest("[data-cat],[data-go],[data-det],[data-add],[data-sub],#send,#close,#cartbar"); if (!t) return;
-  if (t.id === "send") return send();
-  if (t.id === "close") return closeSheet();
-  if (t.id === "cartbar") return openCart();
-  if (t.dataset.add) return update(+t.dataset.add, 1);
-  if (t.dataset.sub) return update(+t.dataset.sub, -1);
-  if (t.dataset.cat) { closeSheet(); go(t.dataset.cat) }
-  else if (t.dataset.go) go(t.dataset.go);
-  else {
-    const k = +t.dataset.det, it = flat[k]; mode = "det";
-    sh.innerHTML = `<div class="grab"></div><div class="emo">${it.icon}</div><h3>${it.n}</h3><div class="e">${it.en}</div>${it.badge ? `<span class="bd">${it.badge}</span>` : ""}<p>${it.d}</p><span class="price">${fmt(it.p)}</span><button class="btn wa" data-add="${k}" id="dadd">أضف إلى الطلب</button><button class="btn" id="close">متابعة التسوق</button>`;
-    ov.classList.add("show")
-  }
-});
-document.addEventListener("input", e => {
-  if (e.target.id === "tbl") tbl = e.target.value;
-  if (e.target.id === "note") note = e.target.value;
-  if (e.target.id === "tbl" || e.target.id === "note") persistOrder();
-});
-document.addEventListener("change", e => {
-  if (e.target.name !== "orderType") return;
-  orderType = e.target.value;
-  $("#addressField").hidden = orderType === "pickup";
-  $("#tbl").required = orderType === "delivery";
-  $("#deliveryNote").textContent = orderType === "delivery" ? `رسوم التوصيل: ${fmt(DELIVERY_FEE)}` : "لا توجد رسوم توصيل على الاستلام.";
-  $("#grandTotal").textContent = fmt(total());
-  $("#ct").textContent = fmt(total());
-  document.querySelectorAll(".type-option").forEach(label => label.classList.toggle("active", label.contains(e.target)));
-  persistOrder();
-});
-$("#cats").onclick = () => { mode = "cats"; $("#cats").classList.add("active"); $("#cats").setAttribute("aria-pressed", "true"); sh.innerHTML = `<div class="grab"></div><h3>الأقسام</h3><div class="cl">${ACTIVE_MENU.map(c => `<button data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("")}</div>`; ov.classList.add("show") };
-ov.addEventListener("click", e => { if (e.target === ov) closeSheet() });
-addEventListener("keydown", e => { if (e.key === "Escape") closeSheet() });
-/* ===== حركات التمرير ===== */
-const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("v"); io.unobserve(x.target) } }), { threshold: .12 });
-document.querySelectorAll(".it").forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + "ms"; io.observe(el) });
-document.querySelectorAll(".ch").forEach(el => io.observe(el));
-/* تمرير: شريط التقدم + بارالاكس + القسم النشط */
-const secs = [...document.querySelectorAll(".cat")], pills = [...document.querySelectorAll(".pill")], box = $("#pills"), dockHome = $(".dock [data-go='home']"), dockMenu = $(".dock [data-go='menu']");
-let last = -1;
-function onScroll() {
-  const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
-  $("#prog").style.width = (h > 0 ? y / h * 100 : 0) + "%";
-  const homeActive = y < $("#home").offsetHeight * .75;
-  dockHome.classList.toggle("active", homeActive);
-  dockMenu.classList.toggle("active", !homeActive);
-  dockHome.setAttribute("aria-pressed", String(homeActive));
-  dockMenu.setAttribute("aria-pressed", String(!homeActive));
-  let cur = 0; secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= innerHeight * .35) cur = i });
-  if (cur === last) return; last = cur;
-  pills.forEach((p, i) => p.classList.toggle("on", i === cur));
-  const a = pills[cur]; box.scrollTo({ left: a.offsetLeft - box.clientWidth / 2 + a.offsetWidth / 2, behavior: "smooth" });
-}
-addEventListener("scroll", onScroll, { passive: true }); onScroll();
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>طبريا | TABARIA — المنيو</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Aref+Ruqaa:wght@700&family=Montserrat:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="sprig" viewBox="0 0 60 70">
+        <path d="M8 66C14 44 28 24 48 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+        <g fill="currentColor">
+          <ellipse cx="14" cy="50" rx="3.4" ry="9" transform="rotate(-55 14 50)" />
+          <ellipse cx="22" cy="52" rx="3.4" ry="9" transform="rotate(35 22 52)" />
+          <ellipse cx="22" cy="36" rx="3.4" ry="9" transform="rotate(-50 22 36)" />
+          <ellipse cx="31" cy="38" rx="3.4" ry="9" transform="rotate(40 31 38)" />
+          <ellipse cx="32" cy="24" rx="3.2" ry="8.5" transform="rotate(-45 32 24)" />
+          <ellipse cx="41" cy="26" rx="3.2" ry="8.5" transform="rotate(45 41 26)" />
+          <ellipse cx="44" cy="12" rx="3" ry="8" transform="rotate(-40 44 12)" />
+          <ellipse cx="51" cy="14" rx="3" ry="8" transform="rotate(55 51 14)" />
+        </g>
+      </symbol>
+      <symbol id="waves" viewBox="0 0 160 24">
+        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M2 6q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+          <path d="M2 12q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+          <path d="M2 18q10-8 19 0t19 0t19 0t19 0t19 0t19 0t19 0t19 0" />
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="prog"><i id="prog"></i></div>
+  <header class="hero" id="home">
+    <img class="hero-brand" src="assets/logo-transparent.png" alt="شعار طبريا مع خريطة فلسطين">
+    <div class="brand-plaque" role="img" aria-label="شعار مطعم طبريا" hidden>
+      <svg class="plaque-art" viewBox="0 0 840 280" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <path id="plaqueShape"
+            d="M420 8C442 30 461 43 489 50h194c24 0 34 10 43 27 24-1 40 10 45 29 20 4 36 16 52 34-16 18-32 30-52 34-5 19-21 30-45 29-9 17-19 27-43 27H489c-28 7-47 20-69 42-22-22-41-35-69-42H157c-24 0-34-10-43-27-24 1-40-10-45-29-20-4-36-16-52-34 16-18 32-30 52-34 5-19 21-30 45-29 9-17 19-27 43-27h194C379 43 398 30 420 8Z" />
+          <g id="plaqueBranch" fill="#5D6B3F" stroke="#5D6B3F" stroke-linecap="round">
+            <path d="M104 166c23-8 41-22 56-43" fill="none" stroke-width="2" />
+            <ellipse cx="119" cy="153" rx="4" ry="10" transform="rotate(-55 119 153)" />
+            <ellipse cx="128" cy="158" rx="4" ry="10" transform="rotate(38 128 158)" />
+            <ellipse cx="133" cy="137" rx="4" ry="10" transform="rotate(-50 133 137)" />
+            <ellipse cx="143" cy="142" rx="4" ry="10" transform="rotate(42 143 142)" />
+            <ellipse cx="147" cy="122" rx="3.5" ry="9" transform="rotate(-45 147 122)" />
+            <ellipse cx="156" cy="126" rx="3.5" ry="9" transform="rotate(48 156 126)" />
+          </g>
+          <g id="plaqueFlourish" fill="none" stroke="#8B2C29" stroke-width="2">
+            <path d="M0-11 3-3 11 0 3 3 0 11-3 3-11 0-3-3Z" />
+            <path d="M0-5 5 0 0 5-5 0Z" />
+          </g>
+        </defs>
+        <use href="#plaqueShape" fill="#d8cbb9" stroke="#6B7047" stroke-width="5" />
+        <use href="#plaqueShape" fill="none" stroke="#6A4A35" stroke-width="1.5"
+          transform="translate(8 7) scale(.981)" />
+        <use href="#plaqueShape" fill="none" stroke="#85734E" stroke-width="1"
+          transform="translate(15 13) scale(.964)" />
+        <use href="#plaqueBranch" />
+        <use href="#plaqueBranch" transform="translate(840 0) scale(-1 1)" />
+        <g fill="none" stroke="#8B2C29" stroke-width="1.6">
+          <path d="M165 139h96m-96 3h96M579 139h96m-96 3h96" />
+          <path d="m180 137 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Zm411 0 3 3-3 3-3-3Zm66 0 3 3-3 3-3-3Z" fill="#6A4A35" />
+        </g>
+        <use href="#plaqueFlourish" x="86" y="140" />
+        <use href="#plaqueFlourish" x="754" y="140" />
+        <use href="#plaqueFlourish" x="420" y="241" transform="translate(0 0) scale(1)" />
+        <path d="M350 241h43m54 0h43" stroke="#5D6B3F" stroke-width="1.5" />
+      </svg>
+      <img class="brand-logo" src="assets/logo.jpeg" alt="">
+    </div>
+    <svg class="grill" viewBox="0 0 120 150" role="img" aria-label="سيخ شاورما متحرك" hidden>
+      <defs>
+        <clipPath id="cone">
+          <path d="M30 18h60q7 0 5 9L79 118q-1 9-9 9H50q-8 0-9-9L25 27q-2-9 5-9z" />
+        </clipPath>
+        <pattern id="stripes" width="20" height="150" patternUnits="userSpaceOnUse">
+          <rect width="20" height="150" fill="#5D6B3F" />
+          <rect width="8" height="150" fill="#6A4A35" />
+        </pattern>
+        <linearGradient id="shade" x1="0" x2="1">
+          <stop offset="0" stop-color="#6A4A35" stop-opacity=".55" />
+          <stop offset=".5" stop-color="#E8DDCB" stop-opacity=".12" />
+          <stop offset="1" stop-color="#6A4A35" stop-opacity=".55" />
+        </linearGradient>
+      </defs>
+      <path class="flame" d="M10 140c-8-14 2-20 4-34 6 8 14 18 6 34z" fill="#5D6B3F" />
+      <path class="flame b" d="M12 140c-4-8 0-12 2-20 4 5 8 11 3 20z" fill="#A52A2A" />
+      <path class="flame b" d="M110 140c8-14-2-20-4-34-6 8-14 18-6 34z" fill="#5D6B3F" />
+      <path class="flame" d="M108 140c4-8 0-12-2-20-4 5-8 11-3 20z" fill="#A52A2A" />
+      <g class="spitwob">
+        <rect x="58" y="2" width="4" height="146" rx="2" fill="#E8DDCB" />
+        <g clip-path="url(#cone)">
+          <rect class="belt" x="-30" y="0" width="190" height="150" fill="url(#stripes)" />
+          <rect x="0" y="0" width="120" height="150" fill="url(#shade)" />
+        </g>
+        <path d="M30 18h60q7 0 5 9L79 118q-1 9-9 9H50q-8 0-9-9L25 27q-2-9 5-9z" fill="none" stroke="#E8DDCB"
+          stroke-width="2.5" stroke-linejoin="round" />
+        <ellipse cx="60" cy="18" rx="30" ry="4" fill="#6A4A35" />
+      </g>
+    </svg>
+    <p class="desc">طبريا … حكاية فلسطينية تروى</p>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+  <div class="quick" id="quick" aria-label="الأقسام" hidden></div>
+  <nav class="nav" aria-label="أقسام المنيو" hidden>
+    <div class="pills" id="pills"></div>
+  </nav>
+  <main id="menu"></main>
+  <section class="about" hidden>
+    <div class="in">
+      <div class="frame"><img src="assets/interior.jpg" alt="صالة مطعم طبريا" loading="lazy"></div>
+      <div class="at">
+        <h2>نكهة الأرض من قلب فلسطين</h2><svg class="waves" viewBox="0 0 160 24">
+          <use href="#waves" />
+        </svg>
+        <p>زيت الزيتون وخبز الطابون وشاورما على الفحم، في جلسة دافئة بروح البيت الفلسطيني. أهلًا بكم في طبريا.</p>
+      </div>
+    </div>
+  </section>
+  <section class="visit" id="visit" aria-labelledby="visitTitle">
+    <div class="visit-in">
+      <div class="visit-copy">
+        <span class="visit-kicker">زورونا في كامب شيزار</span>
+        <h2 id="visitTitle">يسعدنا لقاؤكم</h2>
+        <p class="visit-hours"><strong>ساعات العمل</strong><span id="visitHours"></span></p>
+      </div>
+      <div class="visit-info">
+        <p class="visit-address"><strong>العنوان</strong><span id="visitAddress"></span></p>
+        <div class="visit-actions">
+          <a class="visit-link" id="visitMap" href="#" target="_blank" rel="noopener noreferrer">
+            <svg class="visit-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            <span>افتح الموقع على الخريطة</span>
+          </a>
+          <a class="visit-link" id="visitPhone" href="#">
+            <svg class="visit-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7l.5 2.8a2 2 0 0 1-.6 1.8l-1.3 1.3a16 16 0 0 0 5.7 5.7l1.3-1.3a2 2 0 0 1 1.8-.6l2.8.5a2 2 0 0 1 1.7 2Z" />
+            </svg>
+            <span>اتصل بنا</span>
+            <span class="visit-phone-number" id="visitPhoneNumber" dir="ltr"></span>
+          </a>
+          <a class="visit-link" id="visitWhatsapp" href="#" target="_blank" rel="noopener noreferrer">
+            <svg class="visit-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.7a8.5 8.5 0 1 1 16.3-3.8Z" />
+              <path
+                d="M8.5 8.5c.5 3 2.5 5 5.5 6l1.2-1.2 2 .8c-.2 1.3-1.2 2.2-2.5 2.2-3.8-.5-7-3.7-7.5-7.5 0-1.3.9-2.3 2.2-2.5l.8 2Z" />
+            </svg>
+            <span>واتساب المطعم</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer id="footer">
+    <div class="band" aria-hidden="true"></div>
+    <svg class="sprig" viewBox="0 0 60 70">
+      <use href="#sprig" />
+    </svg>
+    <div class="logo">طبريا</div><svg class="waves" viewBox="0 0 160 24">
+      <use href="#waves" />
+    </svg>
+    <small>نكهةالأرض من قلب فلسطين</small>
+  </footer>
+  <button class="cartbar" id="cartbar" aria-label="عرض الطلب"><span id="cn"></span><span id="ct"></span><span>عرض الطلب
+      ←</span></button>
+  <div class="dock"><button data-go="home"><span>⌂</span>الرئيسية</button><button id="cats"
+      hidden><span>☰</span>الأقسام</button><button data-go="menu"><span>◈</span>المنيو</button></div>
+  <div class="ov" id="ov" role="dialog" aria-modal="true">
+    <div class="sheet" id="sheet"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
