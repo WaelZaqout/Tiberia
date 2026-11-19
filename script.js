@@ -31,7 +31,7 @@ const MENU = [
           { n: "فرشوحة شاورما", d: "ساندوتش شاورما بخبز الطابون، يُقدّم مع اختيارك من صوص الطحينة أو الثومية.", options: [{ label: "حجم واحد", p: 135 }] },
           { n: "صاج جبنة وزيتون", d: "شاورما ملفوفة بخبز الصاج مع الجبنة والزيتون.", options: [{ label: "فراخ", p: 160 }, { label: "لحمة", p: 250 }] },
           { n: "وجبة سوري", d: "وجبة شاورما بتقديم سوري.", options: [{ label: "فراخ", p: 150 }, { label: "لحمة", p: 250 }] },
-          { n: "وجبة عربي", d: "وجبة شاورما بتقديم عربي.", options: [{ label: "سنجل", p: 170 }, { label: "دبل", p: 220 }] },
+          { n: "وجبة العربي", d: "وجبة شاورما عربي مكوّنة من 6 أو 12 قطعة.", options: [{ label: "6 قطع", p: 165 }, { label: "12 قطعة", p: 225 }] },
           { n: "وجبة عربي ملوكي", d: "وجبة عربي بتقديم ملوكي مميز.", options: [{ label: "فراخ", p: 170 }, { label: "لحمة", p: 260 }] },
           { n: "وجبة الأناناس", d: "وجبة شاورما مع لمسة أناناس لمذاق مميز.", options: [{ label: "فراخ", p: 175 }, { label: "لحمة", p: 230 }] },
           { n: "فرنسـاوي", d: "ساندويتش شاورما فرنسـاوي بطعم غني.", options: [{ label: "فراخ", p: 95 }, { label: "لحمة", p: 200 }] },
@@ -120,7 +120,7 @@ const MENU = [
     id: "extras", name: "الإضافات", icon: "🍟", groups: [{
       items: [
         { n: "بطاطا", en: "Fries", d: "بطاطا مقلية مقرمشة.", p: 35 },
-        { n: "تومية", en: "Garlic Sauce", d: "صوص الثوم الشامي.", p: 10 },
+        { n: "تومية", en: "Garlic Sauce", d: "صوص الثوم الشامي.", p: 30 },
         { n: "سلطات", d: "سلطات طازجة.", p: 30 },
         { n: "طحينة", d: "طحينة.", p: 10 },
         { n: "مخلل", en: "Pickles", d: "تشكيلة مخللات.", p: 10 },
@@ -148,7 +148,8 @@ const WA_NUMBER = "+201043840081";
 const RESTAURANT_PHONE_DISPLAY = "0104 3840081";
 const CART_STORAGE_KEY = "tabaria-order-v5";
 const DELIVERY_FEE = 30;
-const RESTAURANT_ADDRESS = "44 عمر لطفي، محطة ترام كامب شيزار";
+const RESTAURANT_ADDRESS = "كامب شيزار، 44 عمر لطفي على الترام";
+const RESTAURANT_MAP_URL = "https://maps.app.goo.gl/5hCUPjZ3pWWwyEV86";
 const RESTAURANT_HOURS = "من 8:00 صباحًا إلى 2:00 بعد منتصف الليل";
 const RESTAURANT_PHONE = WA_NUMBER.replace(/\D/g, "");
 const waLink = message => `https://wa.me/${WA_NUMBER.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
@@ -156,7 +157,7 @@ const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({ "&
 /* ===== الواجهة ===== */
 const MEAT_AVAILABLE = false;
 const ACTIVE_ITEMS = {
-  shawarma: ["فرشوحة شاورما", "صفيحة شاورما", "فتة شاورما", "شاورما سوري", "شاورما عربي"],
+  shawarma: ["فرشوحة شاورما", "صفيحة شاورما", "فتة شاورما", "شاورما سوري", "وجبة العربي"],
   grill: ["ربع فرخة ورك", "ربع فرخة صدر", "نصف فرخة"],
   rice: ["كبسة", "مندي", "قدرة", "مقلوبة"],
   western: ["فاهيتا"],
@@ -174,7 +175,7 @@ const fmt = p => p + " EGP";
 let mode = "", tbl = "", note = "", orderType = "delivery";
 $("#visitAddress").textContent = RESTAURANT_ADDRESS;
 $("#visitHours").textContent = RESTAURANT_HOURS;
-$("#visitMap").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(RESTAURANT_ADDRESS)}`;
+$("#visitMap").href = RESTAURANT_MAP_URL;
 $("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
 $("#visitPhoneNumber").textContent = RESTAURANT_PHONE_DISPLAY;
 $("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
