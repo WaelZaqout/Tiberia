@@ -99,7 +99,6 @@ const MENU = [
         { n: "فلافل", en: "Falafel", d: "أقراص فلافل مقرمشة مع طحينة.", p: 35 },
         { n: "فول", en: "Foul", d: "فول مدمّس بزيت الزيتون والليمون.", p: 30 },
         { n: "سلطة عربية", en: "Arabic Salad", d: "خيار وطماطم وبقدونس بالليمون.", p: 30 },
-        { n: "سلطة ذرة مايونيز", d: "سلطة ذرة بالمايونيز.", options: [{ label: "كبير", p: 45 }, { label: "وسط", p: 30 }] },
         { n: "سلطة تركي سبايسي", d: "سلطة تركية بنكهة سبايسي.", options: [{ label: "كبير", p: 30 }, { label: "وسط", p: 20 }] },
         { n: "ملفوف بالمايونيز", d: "ملفوف بالمايونيز.", options: [{ label: "كبير", p: 40 }, { label: "وسط", p: 20 }] },
         { n: "خيار باللبن", d: "خيار باللبن.", options: [{ label: "كبير", p: 45 }, { label: "وسط", p: 30 }] },
@@ -117,19 +116,32 @@ const MENU = [
     }]
   },
   {
+    id: "sides", name: "إضافات جانبية", icon: "🥗", groups: [{
+      items: [
+        { n: "سلطة كول سلو", d: "سلطة كول سلو طازجة.", p: 30 },
+        { n: "سلطة مايونيز", d: "سلطة مايونيز.", p: 35 },
+        { n: "سلطة خضراء", d: "سلطة خضراء طازجة.", p: 20 },
+      ]
+    }]
+  },
+  {
     id: "extras", name: "الإضافات", icon: "🍟", groups: [{
       items: [
         { n: "بطاطا", en: "Fries", d: "بطاطا مقلية مقرمشة.", p: 35 },
         { n: "تومية", en: "Garlic Sauce", d: "صوص الثوم الشامي.", options: [{ label: "M - صغيرة", p: 15 }, { label: "L - كبيرة", p: 30 }] },
-        { n: "سلطات", d: "سلطات طازجة.", p: 30 },
         { n: "طحينة", d: "طحينة.", p: 10 },
         { n: "مخلل", en: "Pickles", d: "تشكيلة مخللات.", p: 10 },
         { n: "صوص حار", en: "Hot Sauce", d: "صوص حار بنكهة الفلفل.", p: 10 },
-        { n: "خبز", en: "Bread", d: "خبز عربي ساخن.", p: 8 }]
+        { n: "خبز", en: "Bread", d: "خبز عربي ساخن.", p: 8 },
+        { n: "طبق أرز", d: "طبق أرز.", p: 50 },
+        { n: "موتزاريلا", d: "جبنة موتزاريلا.", p: 15 },
+        { n: "دقوس", d: "صوص دقوس.", p: 25 },
+        { n: "مكسرات", d: "مكسرات.", p: 25 },
+        { n: "عيش", d: "عيش عربي ساخن.", p: 15 }]
     }]
   },
   {
-    id: "drinks", name: "المشروبات", icon: "🥤", groups: [{
+    id: "drinks", name: "مشروبات", icon: "🥤", groups: [{
       items: [
         { n: "مشروبات غازية", en: "Soft Drinks", d: "مشروبات غازية باردة.", p: 20 },
         { n: "مياه", en: "Water", d: "مياه معدنية.", p: 10 },
@@ -137,7 +149,7 @@ const MENU = [
         { n: "ماء صغير", d: "ماء صغير.", p: 10 },
         { n: "لبن عيران", d: "لبن عيران.", p: 30 },
         { n: "لبن رايب", d: "لبن رايب.", p: 25 },
-        { n: "V cola", d: "مشروب V cola.", p: 25 },
+        { n: "V Cola", d: "مشروب V Cola.", p: 25 },
         { n: "قهوة فلسطينية", d: "قهوة فلسطينية.", p: 45 },
         { n: "شاي", d: "شاي.", p: 20 }]
     }]
@@ -161,7 +173,9 @@ const ACTIVE_ITEMS = {
   grill: ["ربع فرخة ورك", "ربع فرخة صدر", "نصف فرخة"],
   rice: ["كبسة", "مندي", "قدرة", "مقلوبة"],
   western: ["فاهيتا"],
-  extras: ["سلطات", "تومية", "طحينة"]
+  sides: ["سلطة كول سلو", "سلطة مايونيز", "سلطة خضراء"],
+  drinks: ["V Cola", "مياه", "لبن عيران"],
+  extras: ["تومية", "طحينة", "طبق أرز", "موتزاريلا", "دقوس", "مكسرات", "عيش"]
 };
 const ACTIVE_MENU = Object.entries(ACTIVE_ITEMS).map(([id, names]) => {
   const category = MENU.find(item => item.id === id);
@@ -179,7 +193,9 @@ $("#visitMap").href = RESTAURANT_MAP_URL;
 $("#visitPhone").href = `tel:+${RESTAURANT_PHONE}`;
 $("#visitPhoneNumber").textContent = RESTAURANT_PHONE_DISPLAY;
 $("#visitWhatsapp").href = waLink("مرحبًا، أود الاستفسار عن مطعم طبريا.");
-const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" }; const ic = c => ICONS[c.id];
+const ICONS = { "shawarma": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M16 3v26M9 8h14l-2 15h-10zM11 13h10M11.5 18h9\"/></svg>", "western": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 8q12-6 24 0L16 28z\"/><circle cx=\"13\" cy=\"12\" r=\"1.4\"/><circle cx=\"19\" cy=\"13\" r=\"1.4\"/><circle cx=\"16\" cy=\"19\" r=\"1.4\"/></svg>", "grill": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M20 5c5 0 8 4 6 8s-6 5-9 4l-8 8-3-3 8-8c-1-3 0-9 6-9z\"/><circle cx=\"6\" cy=\"26\" r=\"2\"/></svg>", "rice": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M5 17h22l-2 9H7zM9 17q7-12 14 0M16 5v3\"/></svg>", "starters": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M4 15h24q0 10-12 10T4 15zM10 13q2-6 6-6M16 13q1-5 7-6\"/></svg>", "extras": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 12l2 16h12l2-16zM11 12V5M16 12V3M21 12V6\"/></svg>", "drinks": "<svg class=\"i\" viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M8 10h16l-2 18H10zM18 10l3-7h4M8 16h16\"/></svg>" };
+ICONS.sides = ICONS.starters;
+const ic = c => ICONS[c.id];
 $("#quick").innerHTML = ACTIVE_MENU.map(c => `<button class="qc" data-cat="${c.id}"><i>${ic(c)}</i>${c.name}</button>`).join("");
 $("#pills").innerHTML = ACTIVE_MENU.map((c, i) => `<button class="pill${i ? "" : " on"}" data-cat="${c.id}">${c.name}</button>`).join("");
 const qtyHtml = k => cart[k] ? `<button class="q" data-sub="${k}" aria-label="إنقاص">−</button><b>${cart[k]}</b><button class="q" data-add="${k}" aria-label="زيادة">+</button>` : `<button class="q add" data-add="${k}">+ أضف</button>`;
